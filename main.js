@@ -2,16 +2,24 @@ const { app, BrowserWindow } = require('electron')
 
 let win;
 
+// Below code removes commented warning:
+// Electron Security Warning (Insecure Content-Security-Policy) This renderer process has either no Content Security
+// Policy set or a policy with "unsafe-eval" enabled. This exposes users of this app to unnecessary security risks.
+// For more information and help, consult https://electronjs.org/docs/tutorial/security. This warning will not show up once the app is packaged.
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+
 function createWindow()
 {
   win = new BrowserWindow({
     width: 600,
     height: 600,
     backgroundColor: '#ffffff',
-    icon: `file://${__dirname}/dist/assets/logo.png`
+    webPreferences: {
+      webSecurity: false
+    }
   })
 
-  win.loadURL(`file://${__dirname}/dist/index.html`)
+  win.loadURL(`file://${__dirname}/dist/configuration-app/index.html`)
 
   win.webContents.openDevTools()
 

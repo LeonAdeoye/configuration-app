@@ -5,11 +5,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './main-grid.component.html',
   styleUrls: ['./main-grid.component.sass']
 })
-export class MainGridComponent implements OnInit {
-
+export class MainGridComponent implements OnInit
+{
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
   }
 
 }

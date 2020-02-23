@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainGridComponent } from './main-grid.component';
+import { MainGridComponent } from '../components/main-grid/main-grid.component';
 
 describe('MainGridComponent', () => {
   let component: MainGridComponent;

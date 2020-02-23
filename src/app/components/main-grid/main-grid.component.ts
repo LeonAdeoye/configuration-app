@@ -7,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainGridComponent implements OnInit
 {
-  constructor() { }
+  columnDefs =
+  [
+    { field: 'owner', sortable: true},
+    { field: 'key', sortable: true},
+    { field: 'value', sortable: true}
+  ];
+
+  rowData =
+  [
+    { owner: 'horatio', key: 'surname', value: "Adeoye" },
+    { owner: 'horatio', key: 'firstName', value: "Ethan" },
+    { owner: 'horatio', key: 'age', value: 7 }
+  ];
+
+  constructor() {}
 
   ngOnInit(): void
   {
   }
-
 }

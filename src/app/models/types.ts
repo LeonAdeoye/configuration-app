@@ -6,3 +6,19 @@ export enum LogLevel
   WARN = 4,
   ERROR = 5
 }
+
+export enum MessageMethod
+{
+  WEB_SOCKET = "webSocket",
+  GET = "get",
+  POST = "post",
+  DELETE = "delete",
+  PUT = "put"
+}
+
+export enum MessageTransport
+{
+  HTTP = "Http",
+  HTTPS = "Https",
+  WEB_SOCKET = "WebSocket"
+}

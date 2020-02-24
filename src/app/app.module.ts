@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainGridComponent } from './components/main-grid/main-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
-import {LoggingService} from "./services/logging.service";
-import {MessageService} from "./services/message.service";
-import {ConfigurationService} from "./services/configuration.service";
-import {BootstrapService} from "./services/bootstrap.service";
+import { LoggingService } from "./services/logging.service";
+import { MessageService } from "./services/message.service";
+import { ConfigurationService } from "./services/configuration.service";
+import { BootstrapService } from "./services/bootstrap.service";
+import { PopupService } from "./services/popup.service";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,13 +20,15 @@ import {BootstrapService} from "./services/bootstrap.service";
   imports: [
     BrowserModule,
     AgGridModule.withComponents([]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [
     LoggingService,
     MessageService,
     ConfigurationService,
-    BootstrapService
+    BootstrapService,
+    PopupService
   ],
   bootstrap: [AppComponent]
 })

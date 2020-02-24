@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {LoggingService} from "../../services/logging.service";
-import {ConfigurationService} from "../../services/configuration.service";
-import {LogLevel} from "../../models/types";
+import { LoggingService } from "../../services/logging.service";
+import { ConfigurationService } from "../../services/configuration.service";
+import { LogLevel } from "../../models/types";
 
 @Component({
   selector: 'app-main-grid',
@@ -26,7 +26,6 @@ export class MainGridComponent implements OnInit
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
-
   }
 
   private log(message: string, logLevel: LogLevel)

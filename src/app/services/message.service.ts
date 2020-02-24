@@ -27,7 +27,7 @@ export class MessageService
     switch(message.getTransport())
     {
       case MessageTransport.HTTP:
-        return this.httpClient.request<Object[]>(message.getMethod(), message.getAddress(), { responseType: "json" });
+        return this.httpClient.request<any>(message.getMethod(), message.getAddress(), { responseType: "json" });
       case MessageTransport.HTTPS:
         break;
       case MessageTransport.WEB_SOCKET:

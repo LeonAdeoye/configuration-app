@@ -26,6 +26,7 @@ export class MainGridComponent implements OnInit
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
+    this.configurationService.loadAllConfigurations();
   }
 
   private log(message: string, logLevel: LogLevel)

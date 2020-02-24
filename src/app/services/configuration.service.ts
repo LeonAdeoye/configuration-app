@@ -3,8 +3,6 @@ import { LoggingService } from "./logging.service";
 import { MessageService } from "./message.service";
 import { LogLevel, MessageMethod, MessageTransport } from "../models/types";
 import { Message } from "../models/message";
-import { Observable } from "rxjs";
-import { Configuration } from "../models/configuration";
 import { Constants } from "../models/constants";
 
 @Injectable({
@@ -13,7 +11,6 @@ import { Constants } from "../models/constants";
 export class ConfigurationService
 {
   private configurationsMap = new Map();
-  private configurations: Observable<any>;
 
   constructor(private loggingService: LoggingService, private messageService: MessageService)
   {
@@ -31,13 +28,12 @@ export class ConfigurationService
 
   public loadAllConfigurations() : any
   {
-    let message = new Message(Constants.CONFIGURATION_SERVICE_URL, null, MessageTransport.HTTP, MessageMethod.GET);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}configurations`, null, MessageTransport.HTTP, MessageMethod.GET);
     this.messageService.send(message).subscribe((configurations) =>
     {
       for(let index = 0; index < configurations.length; ++index)
       {
-        let configuration = configurations[index] as Configuration;
-        console.log(`configuration:${JSON.stringify(configuration)}`);
+        console.log(`configuration:${JSON.stringify(configurations[index])}`);
       }
     });
   }
@@ -49,19 +45,19 @@ export class ConfigurationService
 
   public addNewConfiguration(): void
   {
-    let message = new Message("", "", MessageTransport.HTTP, MessageMethod.GET);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}configuration`, null, MessageTransport.HTTP, MessageMethod.POST);
     this.messageService.send(message);
   }
 
   public deleteConfiguration(): void
   {
-    let message = new Message("", "", MessageTransport.HTTP, MessageMethod.DELETE);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}configuration`, null, MessageTransport.HTTP, MessageMethod.DELETE);
     this.messageService.send(message);
   }
 
   public updateConfiguration(): void
   {
-    let message = new Message("", "", MessageTransport.HTTP, MessageMethod.PUT);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}configuration`, null, MessageTransport.HTTP, MessageMethod.PUT);
     this.messageService.send(message);
   }
 

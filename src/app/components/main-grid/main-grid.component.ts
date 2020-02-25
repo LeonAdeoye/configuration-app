@@ -11,32 +11,24 @@ import { GridOptions } from "ag-grid-community";
 })
 export class MainGridComponent implements OnInit
 {
-  columnDefs =
-  [
-    { field: 'owner', sortable: true},
-    { field: 'key', sortable: true},
-    { field: 'value', sortable: true}
-  ];
-
-  rowData =
-  [
-    { owner: 'horatio', key: 'surname', value: "Adeoye" },
-    { owner: 'horatio', key: 'firstName', value: "Ethan" },
-    { owner: 'horatio', key: 'age', value: 7 }
-  ];
-
-  private gridOptions: GridOptions;
+  public configurationsGridOptions: GridOptions;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
-    this.gridOptions = <GridOptions> {};
-    this.gridOptions.columnDefs = this.getColumnsDefinitions();
-    this.gridOptions.getContextMenuItems = (params) => this.getContextMenuItems(params);
+    // TODO move this call to bootstrap service.
     this.configurationService.loadAllConfigurations();
+
+    this.configurationsGridOptions = <GridOptions> {};
+    this.configurationsGridOptions.columnDefs = this.getColumnsDefinitions();
+    this.configurationsGridOptions.getContextMenuItems = (params) => this.getContextMenuItems(params);
+    this.configurationsGridOptions.getRowNodeId = (row) =>
+    {
+      return row.getId;
+    }
 
     configurationService.serviceUpdate.subscribe((serviceUpdate: ServiceUpdate) =>
     {
-      if(serviceUpdate  === ServiceUpdate.REFRESH)
+      if(serviceUpdate  === ServiceUpdate.REFRESH && this.configurationsGridOptions.api)
       {
         this.refreshGrid();
       }
@@ -81,7 +73,7 @@ export class MainGridComponent implements OnInit
       {
         field: 'value',
         sortable: true,
-        monWidth: 300
+        minWidth: 300
       }
     ];
   }
@@ -91,6 +83,44 @@ export class MainGridComponent implements OnInit
     let itemsToUpdate = [];
     let itemsToRemove = [];
     let itemsToAdd = [];
+
+    let configurations = this.configurationService.getAllConfigurations();
+    for(let index = 0; index < configurations.length; ++index)
+    {
+      let configuration = configurations[index];
+      let configurationUpdateRowNode = this.configurationsGridOptions.api.getRowNode(configuration.getId());
+
+      if(configurationUpdateRowNode)
+        itemsToUpdate.push(configuration);
+      else
+        itemsToAdd.push(configuration);
+    }
+
+    this.configurationsGridOptions.api.forEachNode((currentRow) =>
+    {
+      let foundMatchingRow = false;
+      for(let index = 0; index < configurations.length; ++index)
+      {
+        if(currentRow.data.id === configurations[index].getId())
+        {
+          foundMatchingRow = true;
+          break;
+        }
+      }
+
+      if(!foundMatchingRow)
+        itemsToRemove.push(currentRow.data)
+    });
+
+    this.configurationsGridOptions.api.updateRowData({remove: itemsToRemove});
+    this.configurationsGridOptions.api.updateRowData({update: itemsToUpdate});
+
+    for(let index = 0; index < itemsToAdd.length; ++index)
+      this.configurationsGridOptions.api.updateRowData({add: [itemsToAdd[index]], addIndex: index});
+  }
+
+  public onGridReady(event): void
+  {
 
   }
 

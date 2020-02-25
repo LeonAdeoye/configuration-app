@@ -23,7 +23,7 @@ export class MainGridComponent implements OnInit
     this.configurationsGridOptions.getContextMenuItems = (params) => this.getContextMenuItems(params);
     this.configurationsGridOptions.getRowNodeId = (row) =>
     {
-      return row.getId;
+      return row.id;
     }
 
     configurationService.serviceUpdate.subscribe((serviceUpdate: ServiceUpdate) =>
@@ -63,17 +63,17 @@ export class MainGridComponent implements OnInit
       {
         field: 'owner',
         sortable: true,
-        minWidth: 150
+        minWidth: 130
       },
       {
         field: 'key',
         sortable: true,
-        minWidth: 150
+        minWidth: 220
       },
       {
         field: 'value',
         sortable: true,
-        minWidth: 300
+        minWidth: 450
       }
     ];
   }

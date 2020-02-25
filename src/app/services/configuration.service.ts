@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { LoggingService } from "./logging.service";
 import { MessageService } from "./message.service";
-import { LogLevel, MessageMethod, MessageTransport } from "../models/types";
+import { LogLevel, MessageMethod, MessageTransport, ServiceUpdate } from "../models/types";
 import { Message } from "../models/message";
 import { Constants } from "../models/constants";
 import { Configuration } from "../models/configuration";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +13,16 @@ import { Configuration } from "../models/configuration";
 export class ConfigurationService
 {
   private configurations = Array<Configuration>();
+  public serviceUpdate: Subject<ServiceUpdate>;
 
   constructor(private loggingService: LoggingService, private messageService: MessageService)
   {
+    this.serviceUpdate = new Subject<ServiceUpdate>();
   }
 
   private log(message: string, logLevel: LogLevel)
   {
     this.loggingService.log("ConfigurationService", message, logLevel);
-  }
-
-  private cacheAllConfigurations(): void
-  {
-
   }
 
   public loadAllConfigurations() : void
@@ -34,8 +32,9 @@ export class ConfigurationService
     {
         try
         {
-          for(let index = 0; index < configurations.length; ++index)
-            this.configurations.push(Configuration.deserialize(configurations[index]));
+          this.configurations = Configuration.deserializeArray(configurations);
+          this.log(`Retrieved ${configurations.length} configurations from the configuration micro-service.`, LogLevel.INFO);
+          this.serviceUpdate.next(ServiceUpdate.REFRESH);
         }
         catch(err)
         {
@@ -69,6 +68,12 @@ export class ConfigurationService
 
   getConfigurationValue(owner: string, key: string): string
   {
+    for(let index = 0; index < this.configurations.length; ++index)
+    {
+      if(this.configurations[index].getOwner() === owner && this.configurations[index].getKey() === key)
+        return this.configurations[index].getValue();
+    }
+
     return "";
   }
 }

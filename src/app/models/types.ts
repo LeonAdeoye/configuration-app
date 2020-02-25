@@ -1,3 +1,6 @@
+import { updatePlaceholderMap } from "@angular/compiler/src/render3/view/i18n/util";
+import { ɵɵqueryRefresh } from "@angular/core";
+
 export enum LogLevel
 {
   TRACE = 1,
@@ -9,11 +12,11 @@ export enum LogLevel
 
 export enum MessageMethod
 {
-  WEB_SOCKET = "webSocket",
-  GET = "get",
-  POST = "post",
-  DELETE = "delete",
-  PUT = "put"
+  WEB_SOCKET = "WEB_SOCKET",
+  GET = "GET",
+  POST = "POST",
+  DELETE = "DELETE",
+  PUT = "PUT"
 }
 
 export enum MessageTransport
@@ -21,4 +24,14 @@ export enum MessageTransport
   HTTP = "Http",
   HTTPS = "Https",
   WEB_SOCKET = "WebSocket"
+}
+
+
+export enum ServiceUpdate
+{
+  UP,
+  REFRESH,
+  UPDATE,
+  STALE,
+  DISCONNECTED
 }

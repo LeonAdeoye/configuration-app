@@ -7,7 +7,7 @@ export class Message
   private readonly method: MessageMethod;
   private readonly address: string;
 
-  constructor(address: string, message: string, transport?: MessageTransport, method?: MessageMethod)
+  public constructor(address: string, message?: string, transport?: MessageTransport, method?: MessageMethod)
   {
     this.address = address;
     this.message = message;
@@ -15,22 +15,22 @@ export class Message
     this.method = method;
   }
 
-  getMessage(): string
+  public getMessage(): string
   {
     return this.message;
   }
 
-  getTransport(): string
+  public getTransport(): string
   {
     return this.transport;
   }
 
-  getMethod(): string
+  public getMethod(): string
   {
     return this.method;
   }
 
-  getAddress(): string
+  public getAddress(): string
   {
     return this.address;
   }

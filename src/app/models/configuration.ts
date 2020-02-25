@@ -15,7 +15,7 @@ export class Configuration
   @JsonProperty("value", String)
   private value: string;
 
-  constructor(owner?: string, key?:string, value?: string, id?: string)
+  public constructor(owner?: string, key?:string, value?: string, id?: string)
   {
     this.owner = owner;
     this.key = key;
@@ -23,27 +23,27 @@ export class Configuration
     this.id = id;
   }
 
-  getId(): string
+  public getId(): string
   {
     return this.id;
   }
 
-  getOwner(): string
+  public getOwner(): string
   {
     return this.owner;
   }
 
-  getKey(): string
+  public getKey(): string
   {
     return this.key;
   }
 
-  getValue(): string
+  public getValue(): string
   {
     return this.value;
   }
 
-  setValue(value: string): void
+  public setValue(value: string): void
   {
     this.value = value;
   }
@@ -63,7 +63,7 @@ export class Configuration
     }
   }
 
-  public static deserializeArray(jsonObjectArray: any[]): Array<Configuration>
+  public static deserializeArray(jsonObjectArray: any): Array<Configuration>
   {
     try
     {

@@ -3,9 +3,6 @@ import { LogLevel, MessageTransport } from "../models/types";
 import { LoggingService } from "./logging.service";
 import { Message } from "../models/message";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { Configuration } from "../models/configuration";
-
 
 @Injectable({
   providedIn: 'root'

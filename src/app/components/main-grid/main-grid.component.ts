@@ -17,10 +17,9 @@ export class MainGridComponent implements OnInit
   {
     // TODO move this call to bootstrap service.
     this.configurationService.loadAllConfigurations();
-
     this.configurationsGridOptions = <GridOptions> {};
     this.configurationsGridOptions.columnDefs = this.getColumnsDefinitions();
-    this.configurationsGridOptions.getContextMenuItems = (params) => this.getContextMenuItems(params);
+    this.configurationsGridOptions.getContextMenuItems = (params) => this.getDefaultContextMenuItems(params);
     this.configurationsGridOptions.getRowNodeId = (row) =>
     {
       return row.id;
@@ -40,19 +39,26 @@ export class MainGridComponent implements OnInit
     this.loggingService.log("MainGridComponent", message, logLevel);
   }
 
-  private getContextMenuItems(params): any[]
+  // This feature is not supported in the community version of ag-grid and has not been tested.
+  public getDefaultContextMenuItems(params): any[]
   {
     return [
       {
         name: "Edit",
         disabled: true,
-        action: () => {}
+        action: () =>
+        {
+          this.editConfiguration(params);
+        }
       },
       "separator",
       {
         name: "Delete",
         disabled: true,
-        action: () => {}
+        action: () =>
+        {
+          this.deleteConfiguration(params);
+        }
       }
     ];
   }
@@ -126,5 +132,15 @@ export class MainGridComponent implements OnInit
 
   ngOnInit(): void
   {
+  }
+
+  public editConfiguration(params: any): void
+  {
+
+  }
+
+  public deleteConfiguration(params: any): void
+  {
+
   }
 }

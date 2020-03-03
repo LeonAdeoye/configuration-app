@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow} = require('electron')
+const contextMenu = require('electron-context-menu');
 
 let win;
 
@@ -24,12 +25,14 @@ function createWindow()
   win.loadURL(`file://${__dirname}/dist/configuration-app/index.html`);
 
   // Uncomment to debug.
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools();
 
   win.on('closed', () =>
   {
     win = null
   });
+
+  console.log("createWindow");
 }
 
 app.on('ready', createWindow)
@@ -49,3 +52,30 @@ app.on('activate', () =>
     createWindow();
   }
 });
+
+contextMenu({
+  prepend: (params, browserWindow) => [
+    {
+      label: 'Add new configuration',
+      click: (menuItem, browserWindow, event) =>
+      {
+        console.log("Adding new configuration")
+      }
+    },
+    {
+      label: 'Clone existing configuration',
+      click: (menuItem, browserWindow, event) =>
+      {
+        console.log("Cloning existing configuration")
+      }
+    },
+    {
+      label: 'Delete existing configuration',
+      click: (menuItem, browserWindow, event) =>
+      {
+        console.log("Deleting existing configuration")
+      }
+    },
+  ]
+});
+

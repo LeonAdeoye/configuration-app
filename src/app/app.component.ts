@@ -28,7 +28,7 @@ export class AppComponent
 
         this.ipcRenderer.on('context-menu-signal', (event, arg) =>
         {
-          this.log('App component received context-menu-signal from backend: ' + arg, LogLevel.DEBUG);
+          this.log('App component received context-menu-signal: ' + arg, LogLevel.DEBUG);
         })
       }
       catch (e)

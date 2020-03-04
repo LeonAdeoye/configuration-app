@@ -1,5 +1,4 @@
-const { app, BrowserWindow, Menu} = require('electron')
-const contextMenu = require('electron-context-menu');
+const { app, BrowserWindow, Menu, MenuItem} = require('electron');
 
 let win;
 
@@ -37,6 +36,46 @@ function createWindow()
   {
     win.webContents.send('browser-ready-signal', 'sending browser-ready-signal from the backend process to browser component/service');
   });
+
+  setupContextMenu();
+}
+
+function setupContextMenu()
+{
+  const contextMenu = new Menu();
+
+  contextMenu.append(new MenuItem({
+    label: "Add new configuration",
+    click: () =>
+    {
+      win.webContents.send('context-menu-signal','add-configuration');
+    }
+  }));
+
+  contextMenu.append(new MenuItem({ type: 'separator' }));
+
+  contextMenu.append(new MenuItem({
+    label: "Clone existing configuration",
+    click: () =>
+    {
+      win.webContents.send('context-menu-signal','clone-configuration');
+    }
+  }));
+
+  contextMenu.append(new MenuItem({ type: 'separator' }));
+
+  contextMenu.append(new MenuItem({
+    label: "Delete existing configuration",
+    click: () =>
+    {
+      win.webContents.send('context-menu-signal','delete-configuration');
+    }
+  }));
+
+  win.webContents.on('context-menu', () =>
+  {
+    contextMenu.popup(win)
+  })
 }
 
 app.on('ready', createWindow);
@@ -65,30 +104,4 @@ app.on('activate', () =>
 //   console.log("arg: " + JSON.stringify(arg));
 // });
 
-contextMenu({
-  prepend: () =>
-  [
-    {
-      label: 'Add new configuration',
-      click: () =>
-      {
-        win.webContents.send('context-menu-signal','add-configuration');
-      }
-    },
-    {
-      label: 'Clone existing configuration',
-      click: () =>
-      {
-        win.webContents.send('context-menu-signal','clone-configuration');
-      }
-    },
-    {
-      label: 'Delete existing configuration',
-      click: () =>
-      {
-        win.webContents.send('context-menu-signal','delete-configuration');
-      }
-    },
-  ]
-});
 

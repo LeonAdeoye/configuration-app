@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LogLevel } from "../models/types";
 import { LoggingService } from "./logging.service";
-import { Subject } from "rxjs";
 import { IpcRenderer } from "electron";
 import { ConfigurationService } from "./configuration.service";
 
@@ -11,7 +10,6 @@ import { ConfigurationService } from "./configuration.service";
 
 export class BootstrapService
 {
-  public static bootstrapSubject = new Subject<String>();
   private ipcRenderer: IpcRenderer;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
@@ -23,7 +21,7 @@ export class BootstrapService
         this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
         this.log("Successfully created IPC renderer in Bootstrap service.", LogLevel.DEBUG);
 
-        this.ipcRenderer.on('window-ready-signal', () =>
+        this.ipcRenderer.on('browser-ready-signal', () =>
         {
           this.configurationService.loadAllConfigurations();
         })

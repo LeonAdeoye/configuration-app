@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain} = require('electron')
+const { app, BrowserWindow} = require('electron')
 const contextMenu = require('electron-context-menu');
 
 let win;
@@ -32,10 +32,14 @@ function createWindow()
     win = null
   });
 
-  win.webContents.send('window-ready-signal', 'sending window-ready-signal from the backend process to renderer');
+  // This event will be fired when all of the renderer's component and service constructors have ran - when the renderer (browser) is ready
+  win.webContents.on('did-finish-load',() =>
+  {
+    win.webContents.send('browser-ready-signal', 'sending browser-ready-signal from the backend process to browser component/service');
+  });
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () =>
 {

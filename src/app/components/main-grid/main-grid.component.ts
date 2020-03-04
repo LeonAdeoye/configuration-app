@@ -15,8 +15,6 @@ export class MainGridComponent implements OnInit
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
-    // TODO move this call to bootstrap service.
-    //this.configurationService.loadAllConfigurations();
     this.configurationsGridOptions = <GridOptions> {};
     this.configurationsGridOptions.columnDefs = this.getColumnsDefinitions();
     this.configurationsGridOptions.getContextMenuItems = (params) => this.getDefaultContextMenuItems(params);

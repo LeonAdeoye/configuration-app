@@ -1,4 +1,4 @@
-const { app, BrowserWindow} = require('electron')
+const { app, BrowserWindow, Menu} = require('electron')
 const contextMenu = require('electron-context-menu');
 
 let win;
@@ -33,7 +33,7 @@ function createWindow()
   });
 
   // This event will be fired when all of the renderer's component and service constructors have ran - when the renderer (browser) is ready
-  win.webContents.on('did-finish-load',() =>
+  win.webContents.once('did-finish-load',() =>
   {
     win.webContents.send('browser-ready-signal', 'sending browser-ready-signal from the backend process to browser component/service');
   });
@@ -41,7 +41,8 @@ function createWindow()
 
 app.on('ready', createWindow);
 
-app.on('window-all-closed', () =>
+// This listener is invoked only the next time a message is sent to channel, after which it is removed.
+app.once('window-all-closed', () =>
 {
   if(process.platform !== 'darwin')
   {

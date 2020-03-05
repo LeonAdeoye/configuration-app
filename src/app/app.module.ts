@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,8 +11,14 @@ import { ConfigurationService } from "./services/configuration.service";
 import { BootstrapService } from "./services/bootstrap.service";
 import { PopupService } from "./services/popup.service";
 import { HttpClientModule } from "@angular/common/http";
+import { MaterialModule } from './material.module';
+
 
 @NgModule({
+  schemas:
+  [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
   declarations: [
     AppComponent,
     MainGridComponent
@@ -21,7 +27,8 @@ import { HttpClientModule } from "@angular/common/http";
     BrowserModule,
     AgGridModule.withComponents([]),
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [
     LoggingService,

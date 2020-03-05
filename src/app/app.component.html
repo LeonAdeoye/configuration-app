@@ -1,7 +1,26 @@
 <div>
   <div class="toolbar" role="banner">
     <span>Configurations</span>
-    <mat-icon class="icon">input</mat-icon>
+    <mat-sidenav-container>
+      <mat-sidenav-content>
+        <mat-toolbar color="primary">
+          <div>
+            <ul class="navigation-items">
+              <li>
+                <a >
+                  <mat-icon class="icon">home</mat-icon>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <mat-icon class="icon">dashboard</mat-icon>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </mat-toolbar>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </div>
   <div class="content" role="main">
     <app-main-grid style="height:740px;"></app-main-grid>

@@ -3,6 +3,7 @@ import { LoggingService } from "../../services/logging.service";
 import { ConfigurationService } from "../../services/configuration.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
 import { GridOptions } from "ag-grid-community";
+import { GridSearchService } from "../../services/grid-search.service";
 
 @Component({
   selector: 'app-main-grid',
@@ -13,7 +14,7 @@ export class MainGridComponent implements OnInit
 {
   public configurationsGridOptions: GridOptions;
 
-  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
+  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private gridSearchService: GridSearchService)
   {
     this.configurationsGridOptions = <GridOptions> {};
     this.configurationsGridOptions.columnDefs = this.getColumnsDefinitions();
@@ -130,6 +131,11 @@ export class MainGridComponent implements OnInit
 
   ngOnInit(): void
   {
+    this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
+    {
+      if(this.configurationsGridOptions.api)
+        this.configurationsGridOptions.api.setQuickFilter(gridSearchTextValue);
+    })
   }
 
   public editConfiguration(params: any): void

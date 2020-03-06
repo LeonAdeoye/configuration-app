@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { BootstrapService } from "./services/bootstrap.service";
 import { IpcRenderer } from 'electron'
 import { LoggingService } from "./services/logging.service";
 import { LogLevel } from "./models/types";
+import { GridSearchService } from "./services/grid-search.service";
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,9 @@ export class AppComponent
 {
   title = 'configuration-app';
   private ipcRenderer: IpcRenderer;
+  private gridSearchTextValue: string;
 
-  public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService)
+  public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private gridSearchService: GridSearchService)
   {
     if ((<any>window).require)
     {
@@ -45,4 +47,13 @@ export class AppComponent
     this.loggingService.log("AppComponent", message, logLevel);
   }
 
+  changeGridSearchTextValue(event): void
+  {
+    if(event.keyCode === 27)
+      this.gridSearchTextValue = "";
+    else
+      this.gridSearchTextValue = event.target.value;
+
+    this.gridSearchService.setText(this.gridSearchTextValue);
+  }
 }

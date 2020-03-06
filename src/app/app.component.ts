@@ -14,7 +14,7 @@ export class AppComponent
 {
   title = 'configuration-app';
   private ipcRenderer: IpcRenderer;
-  private gridSearchTextValue: string;
+  public gridSearchTextValue: string;
 
   public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private gridSearchService: GridSearchService)
   {

@@ -1,7 +1,11 @@
 <div>
   <div class="toolbar" role="banner">
     <span>Configurations</span>
-    <input type="text" placeholder="Enter filter text..." style="width:350px;" (keypress)="changeGridSearchTextValue($event)" value="gridSearchTextValue">
+    <input type="text" placeholder="Enter filter text..."
+           style="width:350px;"
+           (keyup)="changeGridSearchTextValue($event)"
+           tooltip="Press ESC to clear filter text."
+           [(ngModel)]="gridSearchTextValue">
   </div>
   <div class="content" role="main">
     <app-main-grid style="height:740px;"></app-main-grid>

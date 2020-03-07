@@ -22,10 +22,7 @@ export class AppComponent
       try
       {
         this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
-        this.log("Successfully created IPC renderer in App component.", LogLevel.DEBUG);
-
-        // TODO: use this command to see a message from a renderer to the main.js back-end.
-        //this.ipcRenderer.send('my-custom-signal', 'hello, are you there?');
+        this.log("Successfully created IPC renderer in App component. Component is now ready to receive context menu signals.", LogLevel.DEBUG);
 
         this.ipcRenderer.on('context-menu-signal', (event, arg) =>
         {

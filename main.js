@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem} = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, ipcMain} = require('electron');
 
 let win;
 
@@ -97,11 +97,23 @@ app.on('activate', () =>
   }
 });
 
-// TODO: Use this listener if you want send a message from the renderer to the back-end.
-// ipcMain.on('my-custom-signal', (event, arg) =>
-// {
-//   console.log("event: " + event);
-//   console.log("arg: " + JSON.stringify(arg));
-// });
+// Below code show you how to receive messages from the browser/renderer.
+ipcMain.on('command-signal', (event, command) =>
+{
+  if(command)
+  {
+    switch (command)
+    {
+      case "close-app-command":
+        console.log("Received request to close app.");
+        app.quit();
+        break;
+      case "minimize-app-command":
+        console.log("Received request to minimize app.");
+        win.minimize();
+        break;
+    }
+  }
+});
 
 

@@ -19,7 +19,7 @@ export class BootstrapService
       try
       {
         this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
-        this.log("Successfully created IPC renderer in Bootstrap service.", LogLevel.DEBUG);
+        this.log("Successfully created IPC renderer in Bootstrap service. Service is now ready to receive signals.", LogLevel.DEBUG);
 
         // This listener is invoked only ONCE after which it is removed.
         this.ipcRenderer.once('browser-ready-signal', () =>

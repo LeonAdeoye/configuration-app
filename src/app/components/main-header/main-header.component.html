@@ -1,0 +1,12 @@
+<div class="toolbar" role="banner">
+  <span>Configurations</span>
+  <input type="text" placeholder="Enter filter text..."
+         style="width:350px;" (keyup)="changeGridSearchTextValue($event)"
+         tooltip="Press ESC to clear filter text." [(ngModel)]="gridSearchTextValue">
+  <span class="glyphicon glyphicon-search"></span>
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default">Refresh</button>
+    <button type="button" class="btn btn-default">Minimize</button>
+    <button type="button" class="btn btn-default">Close</button>
+  </div>
+</div>

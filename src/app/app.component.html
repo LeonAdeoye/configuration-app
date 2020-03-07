@@ -1,35 +1,4 @@
 <div>
-  <div class="toolbar" role="banner">
-    <span>Configurations</span>
-    <input type="text" placeholder="Enter filter text..."
-           style="width:350px;"
-           (keyup)="changeGridSearchTextValue($event)"
-           tooltip="Press ESC to clear filter text."
-           [(ngModel)]="gridSearchTextValue">
-  </div>
-  <div class="content" role="main">
-    <app-main-grid style="height:740px;"></app-main-grid>
-  </div>
+  <app-main-header></app-main-header>
+  <app-main-grid></app-main-grid>
 </div>
-
-
-<!--<mat-sidenav-container>-->
-  <!--<mat-sidenav-content>-->
-    <!--<mat-toolbar color="primary">-->
-      <!--<div>-->
-        <!--<ul class="navigation-items">-->
-          <!--<li>-->
-            <!--<a >-->
-              <!--<mat-icon class="icon">home</mat-icon>-->
-            <!--</a>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<a>-->
-              <!--<mat-icon class="icon">dashboard</mat-icon>-->
-            <!--</a>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-    <!--</mat-toolbar>-->
-  <!--</mat-sidenav-content>-->
-<!--</mat-sidenav-container>-->

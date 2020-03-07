@@ -4,6 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainGridComponent } from './components/main-grid/main-grid.component';
+import { MainHeaderComponent } from './components/main-header/main-header.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { LoggingService } from "./services/logging.service";
 import { MessageService } from "./services/message.service";
@@ -22,7 +23,8 @@ import { FormsModule } from "@angular/forms";
   ],
   declarations: [
     AppComponent,
-    MainGridComponent
+    MainGridComponent,
+    MainHeaderComponent
   ],
   imports: [
     BrowserModule,

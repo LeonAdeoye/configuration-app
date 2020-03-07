@@ -14,9 +14,8 @@ export class AppComponent
 {
   title = 'configuration-app';
   private ipcRenderer: IpcRenderer;
-  public gridSearchTextValue: string;
 
-  public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private gridSearchService: GridSearchService)
+  public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService)
   {
     if ((<any>window).require)
     {
@@ -45,15 +44,5 @@ export class AppComponent
   private log(message: string, logLevel: LogLevel)
   {
     this.loggingService.log("AppComponent", message, logLevel);
-  }
-
-  changeGridSearchTextValue(event): void
-  {
-    if(event.keyCode === 27)
-      this.gridSearchTextValue = "";
-    else
-      this.gridSearchTextValue = event.target.value;
-
-    this.gridSearchService.setText(this.gridSearchTextValue);
   }
 }

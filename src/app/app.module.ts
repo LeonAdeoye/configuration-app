@@ -13,6 +13,7 @@ import { BootstrapService } from "./services/bootstrap.service";
 import { PopupService } from "./services/popup.service";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from './material.module';
+import {MatIconModule} from '@angular/material/icon'
 import { FormsModule } from "@angular/forms";
 
 
@@ -31,7 +32,9 @@ import { FormsModule } from "@angular/forms";
     AgGridModule.withComponents([]),
     BrowserAnimationsModule,
     HttpClientModule,
-    MaterialModule,FormsModule
+    MaterialModule,
+    FormsModule,
+    MatIconModule
   ],
   providers: [
     LoggingService,

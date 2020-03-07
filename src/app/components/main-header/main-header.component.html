@@ -1,13 +1,11 @@
 <div class="toolbar" role="banner">
   <span>Configurations</span>
-  <input type="text" placeholder="Enter filter text..."
-         style="width:350px;" (keyup)="changeGridSearchTextValue($event)"
+  <input type="text" placeholder="Enter filter text..." style="width:350px;" (keyup)="changeGridSearchTextValue($event)"
          tooltip="Press ESC to clear filter text." [(ngModel)]="gridSearchTextValue">
-  <span class="glyphicon glyphicon-search" style="height:20px; width:20px;" aria-hidden="true"></span>
-  <div class="btn-group" role="group" aria-label="...">
-    <span class="glyphicon glyphicon-plus" (click)="addConfiguration()" aria-hidden="true"></span>
-    <span class="glyphicon glyphicon-refresh" (click)="refreshConfigurations()" aria-hidden="true"></span>
-    <span class="glyphicon glyphicon-minus" (click)="minimizeWindow()"  aria-hidden="true"></span>
-    <span class="glyphicon glyphicon-remove" (click)="closeWindow()" aria-hidden="true"></span>
+  <div>
+    <mat-icon (click)="addConfiguration()">add</mat-icon >
+    <mat-icon (click)="refreshConfigurations()">refresh</mat-icon>
+    <mat-icon (click)="minimizeWindow()">remove</mat-icon>
+    <mat-icon (click)="closeWindow()">close</mat-icon>
   </div>
 </div>

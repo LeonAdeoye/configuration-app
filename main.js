@@ -102,14 +102,13 @@ ipcMain.on('command-signal', (event, command) =>
 {
   if(command)
   {
+    console.log(`Received ${command} from renderer/browser.`);
     switch (command)
     {
       case "close-app-command":
-        console.log("Received request to close app.");
         app.quit();
         break;
       case "minimize-app-command":
-        console.log("Received request to minimize app.");
         win.minimize();
         break;
     }

@@ -39,7 +39,7 @@ export class MainHeaderComponent implements OnInit
 
   public refreshConfigurations(): void
   {
-    this.log("Refreshing all configurations from the persistence source.", LogLevel.INFO);
+    this.log("Refreshing configurations from the configuration micro-service.", LogLevel.INFO);
     this.configurationService.loadAllConfigurations();
   }
 

@@ -11,6 +11,10 @@ $toolbar-max-height: 60px
 $toolbar-font-weight: 600
 $toolbar-title-left-margin: 16px
 
+\:host
+  font-family: $primary-font-family
+  font-size: $toolbar-title-font-size
+
 // Toolbar style STARTS here
 
 div.toolbar
@@ -28,13 +32,6 @@ div.toolbar
 div.toolbar
   span
     margin: 0 $toolbar-title-left-margin
-
-div.toolbar
-  div.btn-group
-    span.glyphicon
-      height: 40px
-      width: 40px
-      background: white
 
 // Toolbar style ENDS here
 

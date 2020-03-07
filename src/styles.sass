@@ -11,4 +11,38 @@ $toolbar-max-height: 60px
 $toolbar-font-weight: 600
 $toolbar-title-left-margin: 16px
 
+// Toolbar style STARTS here
 
+div.toolbar
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: $toolbar-max-height
+  display: flex
+  align-items: center
+  background-color: $primary-background-colour
+  color: $primary-font-colour
+  font-weight: 600
+
+div.toolbar
+  span
+    margin: 0 $toolbar-title-left-margin
+
+div.toolbar
+  div.btn-group
+    span.glyphicon
+      height: 40px
+      width: 40px
+      background: white
+
+// Toolbar style ENDS here
+
+// Main grid style STARTS here
+
+div.content
+  display: flex
+  margin: 60px auto
+  flex-direction: column
+
+// Main grid style ENDS here

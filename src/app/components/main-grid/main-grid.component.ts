@@ -31,6 +31,12 @@ export class MainGridComponent implements OnInit
         this.refreshGrid();
       }
     })
+
+    this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
+    {
+      if(this.configurationsGridOptions.api)
+        this.configurationsGridOptions.api.setQuickFilter(gridSearchTextValue);
+    })
   }
 
   private log(message: string, logLevel: LogLevel)
@@ -131,11 +137,6 @@ export class MainGridComponent implements OnInit
 
   ngOnInit(): void
   {
-    this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
-    {
-      if(this.configurationsGridOptions.api)
-        this.configurationsGridOptions.api.setQuickFilter(gridSearchTextValue);
-    })
   }
 
   public editConfiguration(params: any): void

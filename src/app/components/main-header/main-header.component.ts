@@ -55,6 +55,11 @@ export class MainHeaderComponent implements OnInit
     this.ipcRenderer.send('command-signal', 'minimize-app-command');
   }
 
+  public addConfiguration(): void
+  {
+    this.log("Adding new configuration...", LogLevel.INFO);
+  }
+
   private log(message: string, logLevel: LogLevel): void
   {
     this.loggingService.log("MainHeaderComponent", message, logLevel);

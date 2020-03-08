@@ -13,11 +13,12 @@ import { Subject } from "rxjs";
 export class ConfigurationService
 {
   private configurations = Array<Configuration>();
-  public serviceUpdate: Subject<ServiceUpdate>;
+  public serviceUpdateSubject = new Subject<ServiceUpdate>();
+  public editConfigurationSubject = new Subject<Configuration>();
+  public cloneConfigurationSubject = new Subject<Configuration>();
 
   constructor(private loggingService: LoggingService, private messageService: MessageService)
   {
-    this.serviceUpdate = new Subject<ServiceUpdate>();
   }
 
   private log(message: string, logLevel: LogLevel)
@@ -34,7 +35,7 @@ export class ConfigurationService
         {
           this.configurations = Configuration.deserializeArray(configurations);
           this.log(`Retrieved ${configurations.length} configurations from the configuration micro-service.`, LogLevel.INFO);
-          this.serviceUpdate.next(ServiceUpdate.REFRESH);
+          this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
         }
         catch(err)
         {
@@ -50,19 +51,19 @@ export class ConfigurationService
 
   public addNewConfiguration(): void
   {
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, null, MessageTransport.HTTP, MessageMethod.POST);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{}`, MessageTransport.HTTP, MessageMethod.POST);
     this.messageService.send(message);
   }
 
-  public deleteConfiguration(): void
+  public deleteConfiguration(configurationId: string): void
   {
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, null, MessageTransport.HTTP, MessageMethod.DELETE);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"id" : ${configurationId}}`, MessageTransport.HTTP, MessageMethod.DELETE);
     this.messageService.send(message);
   }
 
-  public updateConfiguration(): void
+  public editConfiguration(): void
   {
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, null, MessageTransport.HTTP, MessageMethod.PUT);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{}`, MessageTransport.HTTP, MessageMethod.PUT);
     this.messageService.send(message);
   }
 

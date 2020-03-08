@@ -4,6 +4,8 @@ import { ConfigurationService } from "../../services/configuration.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
 import { GridOptions } from "ag-grid-community";
 import { GridSearchService } from "../../services/grid-search.service";
+import { IpcRenderer } from 'electron'
+import { Configuration } from "../../models/configuration";
 
 @Component({
   selector: 'app-main-grid',
@@ -13,6 +15,7 @@ import { GridSearchService } from "../../services/grid-search.service";
 export class MainGridComponent implements OnInit
 {
   public configurationsGridOptions: GridOptions;
+  private ipcRenderer: IpcRenderer;
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private gridSearchService: GridSearchService)
   {
@@ -22,26 +25,83 @@ export class MainGridComponent implements OnInit
     this.configurationsGridOptions.getRowNodeId = (row) =>
     {
       return row.id;
-    }
+    };
 
-    configurationService.serviceUpdate.subscribe((serviceUpdate: ServiceUpdate) =>
+    configurationService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.configurationsGridOptions.api)
       {
         this.refreshGrid();
       }
-    })
+    });
 
     this.gridSearchService.gridSearchTextSubject.subscribe((gridSearchTextValue) =>
     {
       if(this.configurationsGridOptions.api)
         this.configurationsGridOptions.api.setQuickFilter(gridSearchTextValue);
-    })
+    });
+
+    if ((<any>window).require)
+    {
+      try
+      {
+        this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
+        this.log("Successfully created IPC renderer in Main Grid component. Component is now ready to receive context menu commands.", LogLevel.DEBUG);
+
+        this.ipcRenderer.on('context-menu-command', (event, arg) =>
+        {
+          this.log('Main Grid component received context-menu-command: ' + arg, LogLevel.DEBUG);
+          let selectedConfiguration: Configuration;
+
+          switch(arg)
+          {
+            case "Edit Configuration":
+              selectedConfiguration = this.getSelectedConfiguration();
+              if(selectedConfiguration)
+              {
+                console.log(`Editing selected configuration ID: ${selectedConfiguration.getId()}`);
+                this.configurationService.editConfigurationSubject.next(selectedConfiguration);
+              }
+              break;
+            case "Clone Configuration":
+              selectedConfiguration = this.getSelectedConfiguration();
+              if(selectedConfiguration)
+              {
+                console.log(`Cloning selected configuration ID: ${selectedConfiguration.getId()}`);
+                this.configurationService.cloneConfigurationSubject.next(selectedConfiguration);
+              }
+              break;
+            case "Delete Configuration":
+              selectedConfiguration = this.getSelectedConfiguration();
+              if(selectedConfiguration)
+                this.configurationService.deleteConfiguration(selectedConfiguration.getId());
+              break;
+            case "Refresh Configurations":
+              this.configurationService.loadAllConfigurations();
+              break;
+          }
+        })
+      }
+      catch (e)
+      {
+        throw e;
+      }
+    }
+    else
+      this.log("Unable to create IPC renderer in App component.", LogLevel.DEBUG);
   }
 
   private log(message: string, logLevel: LogLevel)
   {
     this.loggingService.log("MainGridComponent", message, logLevel);
+  }
+
+  private getSelectedConfiguration() : Configuration
+  {
+    if(this.configurationsGridOptions.api && this.configurationsGridOptions.api.getSelectedRows().length > 0)
+      return this.configurationsGridOptions.api.getSelectedRows()[0] as Configuration;
+
+    return null;
   }
 
   // This feature is not supported in the community version of ag-grid and has not been tested.

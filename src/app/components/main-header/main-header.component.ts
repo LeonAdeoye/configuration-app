@@ -18,33 +18,9 @@ export class MainHeaderComponent implements OnInit
   constructor(private gridSearchService: GridSearchService, private configurationService: ConfigurationService, private loggingService: LoggingService)
   {
     if ((<any>window).require)
-    {
-      try
-      {
-        this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
-        this.log("Successfully created IPC renderer in Main Grid component. Component is now ready to receive context menu commands.", LogLevel.DEBUG);
-
-        this.ipcRenderer.on('context-menu-command', (event, arg) =>
-        {
-          this.log('Main Grid component received context-menu-command: ' + arg, LogLevel.DEBUG);
-          switch(arg)
-          {
-            case "Clone Configurations":
-              break;
-            case "Edit Configuration":
-              break;
-            case "Delete Configuration":
-              break;
-          }
-        })
-      }
-      catch (e)
-      {
-        throw e;
-      }
-    }
+      this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
     else
-      this.log("Unable to create IPC renderer in Main Grid component.", LogLevel.DEBUG);
+      this.log("Unable to create IPC renderer in Main Header component.", LogLevel.DEBUG);
   }
 
   ngOnInit(): void

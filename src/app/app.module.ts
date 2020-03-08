@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainGridComponent } from './components/main-grid/main-grid.component';
@@ -13,8 +12,8 @@ import { BootstrapService } from "./services/bootstrap.service";
 import { PopupService } from "./services/popup.service";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from './material.module';
-import {MatIconModule} from '@angular/material/icon'
 import { FormsModule } from "@angular/forms";
+import { DetailComponent } from "./components/detail/detail.component";
 
 
 @NgModule({
@@ -25,7 +24,8 @@ import { FormsModule } from "@angular/forms";
   declarations: [
     AppComponent,
     MainGridComponent,
-    MainHeaderComponent
+    MainHeaderComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -33,8 +33,7 @@ import { FormsModule } from "@angular/forms";
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-    FormsModule,
-    MatIconModule
+    FormsModule
   ],
   providers: [
     LoggingService,

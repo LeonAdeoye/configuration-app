@@ -24,7 +24,7 @@ function createWindow()
   win.loadURL(`file://${__dirname}/dist/configuration-app/index.html`);
 
   // Uncomment to debug.
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   win.on('closed', () =>
   {
@@ -40,37 +40,28 @@ function createWindow()
   setupContextMenu();
 }
 
+function addContextMenuItem(contextMenu, labelText)
+{
+  contextMenu.append(new MenuItem(
+  {
+    label: labelText,
+    click: () =>
+    {
+      win.webContents.send('context-menu-command',labelText);
+    }
+  }));
+  contextMenu.append(new MenuItem({ type: 'separator' }));
+}
+
 function setupContextMenu()
 {
   const contextMenu = new Menu();
 
-  contextMenu.append(new MenuItem({
-    label: "Add new configuration",
-    click: () =>
-    {
-      win.webContents.send('context-menu-signal','add-configuration');
-    }
-  }));
-
-  contextMenu.append(new MenuItem({ type: 'separator' }));
-
-  contextMenu.append(new MenuItem({
-    label: "Clone existing configuration",
-    click: () =>
-    {
-      win.webContents.send('context-menu-signal','clone-configuration');
-    }
-  }));
-
-  contextMenu.append(new MenuItem({ type: 'separator' }));
-
-  contextMenu.append(new MenuItem({
-    label: "Delete existing configuration",
-    click: () =>
-    {
-      win.webContents.send('context-menu-signal','delete-configuration');
-    }
-  }));
+  addContextMenuItem(contextMenu, "Add Configuration");
+  addContextMenuItem(contextMenu, "Edit Configuration");
+  addContextMenuItem(contextMenu, "Clone Configuration");
+  addContextMenuItem(contextMenu, "Delete Configuration");
+  addContextMenuItem(contextMenu, "Refresh Configurations");
 
   win.webContents.on('context-menu', () =>
   {

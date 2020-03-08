@@ -58,18 +58,12 @@ export class MainGridComponent implements OnInit
             case "Edit Configuration":
               selectedConfiguration = this.getSelectedConfiguration();
               if(selectedConfiguration)
-              {
-                console.log(`Editing selected configuration ID: ${selectedConfiguration.getId()}`);
                 this.configurationService.editConfigurationSubject.next(selectedConfiguration);
-              }
               break;
             case "Clone Configuration":
               selectedConfiguration = this.getSelectedConfiguration();
               if(selectedConfiguration)
-              {
-                console.log(`Cloning selected configuration ID: ${selectedConfiguration.getId()}`);
                 this.configurationService.cloneConfigurationSubject.next(selectedConfiguration);
-              }
               break;
             case "Delete Configuration":
               selectedConfiguration = this.getSelectedConfiguration();

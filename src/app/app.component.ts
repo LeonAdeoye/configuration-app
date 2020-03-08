@@ -13,16 +13,23 @@ import { Configuration } from "./models/configuration";
 })
 export class AppComponent
 {
+  private isDetailPanelVisibleFlag: boolean = false;
   title = 'configuration-app';
-  public configurationSubject = new Subject<Configuration>();
-  private selectedConfiguration: Configuration;
 
   public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
-    this.configurationSubject.subscribe((configuration) =>
-    {
-      this.selectedConfiguration = configuration;
-    })
+    this.configurationService.editConfigurationSubject.subscribe((configuration) => this.editConfiguration(configuration));
+    this.configurationService.cloneConfigurationSubject.subscribe((configuration) => this.cloneConfiguration(configuration));
+  }
+
+  public isDetailPanelVisible(): boolean
+  {
+    return this.isDetailPanelVisibleFlag;
+  }
+
+  public toggleDetailPanelVisibility(): void
+  {
+    this.isDetailPanelVisibleFlag = !this.isDetailPanelVisibleFlag;
   }
 
   private log(message: string, logLevel: LogLevel): void
@@ -33,18 +40,21 @@ export class AppComponent
   private addConfiguration(): void
   {
     // TODO make detail component visible.
+    this.isDetailPanelVisibleFlag = true;
     this.configurationService.addNewConfiguration();
   }
 
-  private editConfiguration(): void
+  private editConfiguration(configuration: Configuration): void
   {
-    // TODO make detail component visible.
+    this.log(`Editing selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
+    this.isDetailPanelVisibleFlag = true;
     this.configurationService.editConfiguration();
   }
 
-  private cloneConfiguration(): void
+  private cloneConfiguration(configuration: Configuration): void
   {
-    // TODO make detail component visible.
+    this.log(`Cloning selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
+    this.isDetailPanelVisibleFlag = true;
     this.configurationService.addNewConfiguration();
   }
 }

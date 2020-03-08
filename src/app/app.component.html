@@ -1,4 +1,7 @@
 <div>
   <app-main-header></app-main-header>
+  <div *ngIf="isDetailPanelVisible()" style="height:300px;width:100%;background: #d2dad7">
+    <app-detail ></app-detail>
+  </div>
   <app-main-grid></app-main-grid>
 </div>

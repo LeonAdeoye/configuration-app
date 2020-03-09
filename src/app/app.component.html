@@ -3,7 +3,7 @@
   <div class="detail-panel" *ngIf="isDetailPanelVisible()">
     <app-detail></app-detail>
   </div>
-  <div class="main-grid" [ngClass]="{ 'detail-panel-displayed-above':isDetailPanelVisible(),'detail-panel-hidden-above':!isDetailPanelVisible()}">
+  <div class="main-grid" [ngClass]="isDetailPanelVisible() ? 'detail-panel-displayed-above' : 'detail-panel-hidden-above'">
     <app-main-grid></app-main-grid>
   </div>
 </div>

@@ -3,7 +3,6 @@ import { BootstrapService } from "./services/bootstrap.service";
 import { LoggingService } from "./services/logging.service";
 import { LogLevel } from "./models/types";
 import { ConfigurationService } from "./services/configuration.service";
-import { BehaviorSubject, Subject } from "rxjs";
 import { Configuration } from "./models/configuration";
 
 @Component({
@@ -47,14 +46,14 @@ export class AppComponent
   private editConfiguration(configuration: Configuration): void
   {
     this.log(`Editing selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
-    this.isDetailPanelVisibleFlag = true;
+    this.toggleDetailPanelVisibility();
     this.configurationService.editConfiguration();
   }
 
   private cloneConfiguration(configuration: Configuration): void
   {
     this.log(`Cloning selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
-    this.isDetailPanelVisibleFlag = true;
+    this.toggleDetailPanelVisibility();
     this.configurationService.addNewConfiguration();
   }
 }

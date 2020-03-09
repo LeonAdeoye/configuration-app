@@ -4,6 +4,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css"
 
 $primary-color: #132640
+$panel-color: #d2dad7
 $primary-font-family: -apple-system, Arial
 $primary-font-color: white
 $toolbar-title-font-size: 24px
@@ -60,6 +61,20 @@ div.toolbar
 
 div.content
   display: flex
-  margin: 60px auto
   flex-direction: column
+
+
+div.main-grid.detail-panel-hidden-above
+  margin-top: 60px
+
+div.main-grid.detail-panel-displayed-above
+  margin-top: 0px
+
+div.detail-panel
+  margin-top: 60px
+  height: 300px
+  width: 100%
+  background: $panel-color
+
+
 

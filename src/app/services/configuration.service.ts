@@ -49,9 +49,10 @@ export class ConfigurationService
     return this.configurations;
   }
 
-  public addNewConfiguration(): void
+  public addNewConfiguration(owner: string, key: string, value: string): void
   {
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{}`, MessageTransport.HTTP, MessageMethod.POST);
+    this.log(`Adding new configuration: {"owner": ${owner} "key": ${key}, "value": ${value}}`, LogLevel.DEBUG);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": ${owner} "key": ${key}, "value": ${value}}`, MessageTransport.HTTP, MessageMethod.POST);
     this.messageService.send(message);
   }
 
@@ -61,9 +62,10 @@ export class ConfigurationService
     this.messageService.send(message);
   }
 
-  public editConfiguration(): void
+  public editConfiguration(owner: string, key: string, value: string): void
   {
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{}`, MessageTransport.HTTP, MessageMethod.PUT);
+    this.log(`Editing exist configuration: {"owner": ${owner} "key": ${key}, "value": ${value}}`, LogLevel.DEBUG);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": ${owner} "key": ${key}, "value": ${value}}`, MessageTransport.HTTP, MessageMethod.PUT);
     this.messageService.send(message);
   }
 

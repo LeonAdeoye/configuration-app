@@ -42,9 +42,10 @@ export class AppComponent
 
   private addConfiguration(): void
   {
-    // TODO make detail component visible.
-    this.isDetailPanelVisibleFlag = true;
-    this.configurationService.addNewConfiguration();
+    this.owner = "";
+    this.key = "";
+    this.value = "";
+    this.toggleDetailPanelVisibility();
   }
 
   private editConfiguration(configuration: Configuration): void
@@ -54,9 +55,7 @@ export class AppComponent
     this.owner = configuration.getOwner();
     this.key = configuration.getKey();
     this.value = configuration.getValue();
-
     this.toggleDetailPanelVisibility();
-    this.configurationService.editConfiguration();
   }
 
   private cloneConfiguration(configuration: Configuration): void
@@ -68,6 +67,5 @@ export class AppComponent
     this.value = configuration.getValue();
 
     this.toggleDetailPanelVisibility();
-    this.configurationService.addNewConfiguration();
   }
 }

@@ -24,6 +24,7 @@ export class MessageService
     switch(message.getTransport())
     {
       case MessageTransport.HTTP:
+        //TODO: handle post and message body
         return this.httpClient.request<any>(message.getMethod(), message.getAddress(), { responseType: "json" });
       case MessageTransport.HTTPS:
         break;

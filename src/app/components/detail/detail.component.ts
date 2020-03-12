@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ConfigurationService } from "../../services/configuration.service";
 
 @Component({
   selector: 'app-detail',
@@ -11,7 +12,7 @@ export class DetailComponent implements OnInit
   @Input() key: string;
   @Input() value: string;
 
-  constructor() { }
+  constructor(private configurationService: ConfigurationService) { }
 
   ngOnInit(): void
   {
@@ -19,16 +20,23 @@ export class DetailComponent implements OnInit
 
   public clear(): void
   {
-
+    this.owner = "";
+    this.key = "";
+    this.value = "";
   }
 
   public save(): void
   {
+    if(this.configurationService.getConfigurationValue(this.owner, this.key))
+      this.configurationService.editConfiguration(this.owner, this.key, this.value);
+    else
+      this.configurationService.addNewConfiguration(this.owner, this.key, this.value);
 
+    // Emit a message to close window.
   }
 
   public cancel(): void
   {
-
+    // Emit a message to close window.
   }
 }

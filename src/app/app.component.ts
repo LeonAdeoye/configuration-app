@@ -14,6 +14,9 @@ export class AppComponent
 {
   private isDetailPanelVisibleFlag: boolean = false;
   title = 'configuration-app';
+  owner: string;
+  key: string;
+  value: string;
 
   public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
@@ -46,6 +49,11 @@ export class AppComponent
   private editConfiguration(configuration: Configuration): void
   {
     this.log(`Editing selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
+
+    this.owner = configuration.getOwner();
+    this.key = configuration.getKey();
+    this.value = configuration.getValue();
+
     this.toggleDetailPanelVisibility();
     this.configurationService.editConfiguration();
   }

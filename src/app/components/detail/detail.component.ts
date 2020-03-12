@@ -16,4 +16,19 @@ export class DetailComponent implements OnInit
   ngOnInit(): void
   {
   }
+
+  public clear(): void
+  {
+
+  }
+
+  public save(): void
+  {
+
+  }
+
+  public cancel(): void
+  {
+
+  }
 }

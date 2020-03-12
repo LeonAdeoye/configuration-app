@@ -14,6 +14,7 @@ export class AppComponent
 {
   private isDetailPanelVisibleFlag: boolean = false;
   title = 'configuration-app';
+
   owner: string;
   key: string;
   value: string;
@@ -61,6 +62,11 @@ export class AppComponent
   private cloneConfiguration(configuration: Configuration): void
   {
     this.log(`Cloning selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
+
+    this.owner = configuration.getOwner();
+    this.key = configuration.getKey();
+    this.value = configuration.getValue();
+
     this.toggleDetailPanelVisibility();
     this.configurationService.addNewConfiguration();
   }

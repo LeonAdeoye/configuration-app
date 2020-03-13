@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigurationService } from "../../services/configuration.service";
 
 @Component({
@@ -11,6 +11,7 @@ export class DetailComponent implements OnInit
   @Input() owner: string;
   @Input() key: string;
   @Input() value: string;
+  @Output() closePanelEventEmitter = new EventEmitter();
 
   constructor(private configurationService: ConfigurationService) { }
 
@@ -32,11 +33,12 @@ export class DetailComponent implements OnInit
     else
       this.configurationService.addNewConfiguration(this.owner, this.key, this.value);
 
-    // Emit a message to close window.
+    this.closePanelEventEmitter.emit();
   }
 
   public cancel(): void
   {
-    // Emit a message to close window.
+
+    this.closePanelEventEmitter.emit();
   }
 }

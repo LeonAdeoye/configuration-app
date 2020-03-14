@@ -58,6 +58,7 @@ export class ConfigurationService
     {
       if(result)
         this.log(`result: ${result}`, LogLevel.DEBUG);
+      this.loadAllConfigurations();
     },
     (error) =>
     {
@@ -74,6 +75,7 @@ export class ConfigurationService
       {
         if(result)
           this.log(`result: ${result}`, LogLevel.DEBUG);
+        this.loadAllConfigurations();
       },
       (error) =>
       {
@@ -91,6 +93,7 @@ export class ConfigurationService
       {
         if(result)
           this.log(`result: ${result}`, LogLevel.DEBUG);
+        this.loadAllConfigurations();
       },
       (error) =>
       {
@@ -103,8 +106,8 @@ export class ConfigurationService
   {
     for(let index = 0; index < this.configurations.length; ++index)
     {
-      if(this.configurations[index].getOwner() === owner && this.configurations[index].getKey() === key)
-        return this.configurations[index].getValue();
+      if(this.configurations[index].owner === owner && this.configurations[index].key === key)
+        return this.configurations[index].value;
     }
 
     return "";

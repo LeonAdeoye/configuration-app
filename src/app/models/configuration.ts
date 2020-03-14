@@ -4,48 +4,63 @@ import { JsonConvert, JsonObject, JsonProperty, ValueCheckingMode } from "json2t
 export class Configuration
 {
   @JsonProperty("id", String)
-  private readonly id: string;
+  private _id: string;
 
   @JsonProperty("owner", String)
-  private readonly owner: string;
+  private _owner: string;
 
   @JsonProperty("key", String)
-  private readonly key: string;
+  private _key: string;
 
   @JsonProperty("value", String)
-  private value: string;
+  private _value: string;
 
   public constructor(owner?: string, key?:string, value?: string, id?: string)
   {
-    this.owner = owner;
-    this.key = key;
-    this.value = value;
-    this.id = id;
+    this._owner = owner;
+    this._key = key;
+    this._value = value;
+    this._id = id;
   }
 
-  public getId(): string
+  public get id(): string
   {
-    return this.id;
+    return this._id;
   }
 
-  public getOwner(): string
+  public set id(value: string)
   {
-    return this.owner;
+    this._id = value;
   }
 
-  public getKey(): string
+  public get owner(): string
   {
-    return this.key;
+    return this._owner;
   }
 
-  public getValue(): string
+  public set owner(value: string)
   {
-    return this.value;
+    this._owner = value;
   }
 
-  public setValue(value: string): void
+  public get key(): string
   {
-    this.value = value;
+    return this._key;
+  }
+
+  public set key(value: string)
+  {
+    this._key = value;
+  }
+
+  public get value(): string
+  {
+    return this._value;
+  }
+
+  public set value(value: string)
+  {
+    this._value = value;
   }
 
   public static deserialize(jsonObject: any): Configuration

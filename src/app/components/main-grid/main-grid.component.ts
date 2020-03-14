@@ -68,7 +68,7 @@ export class MainGridComponent implements OnInit
             case "Delete Configuration":
               selectedConfiguration = this.getSelectedConfiguration();
               if(selectedConfiguration)
-                this.configurationService.deleteConfiguration(selectedConfiguration.getId());
+                this.configurationService.deleteConfiguration(selectedConfiguration.id);
               break;
             case "Refresh Configurations":
               this.configurationService.loadAllConfigurations();
@@ -153,7 +153,7 @@ export class MainGridComponent implements OnInit
     for(let index = 0; index < configurations.length; ++index)
     {
       let configuration = configurations[index];
-      let configurationUpdateRowNode = this.configurationsGridOptions.api.getRowNode(configuration.getId());
+      let configurationUpdateRowNode = this.configurationsGridOptions.api.getRowNode(configuration.id);
 
       if(configurationUpdateRowNode)
         itemsToUpdate.push(configuration);
@@ -166,7 +166,7 @@ export class MainGridComponent implements OnInit
       let foundMatchingRow = false;
       for(let index = 0; index < configurations.length; ++index)
       {
-        if(currentRow.data.id === configurations[index].getId())
+        if(currentRow.data.id === configurations[index].id)
         {
           foundMatchingRow = true;
           break;

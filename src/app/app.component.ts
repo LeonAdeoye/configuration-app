@@ -18,6 +18,7 @@ export class AppComponent
   owner: string;
   key: string;
   value: string;
+  configuration : Configuration;
 
   public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
@@ -42,6 +43,7 @@ export class AppComponent
 
   private addConfiguration(): void
   {
+    this.log(`Adding a new configuration...`, LogLevel.DEBUG);
     this.owner = "";
     this.key = "";
     this.value = "";
@@ -51,21 +53,20 @@ export class AppComponent
   private editConfiguration(configuration: Configuration): void
   {
     this.log(`Editing selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
-
-    this.owner = configuration.getOwner();
-    this.key = configuration.getKey();
-    this.value = configuration.getValue();
+    this.configuration = configuration;
+    this.owner = configuration.owner;
+    this.key = configuration.key;
+    this.value = configuration.value;
     this.toggleDetailPanelVisibility();
   }
 
   private cloneConfiguration(configuration: Configuration): void
   {
     this.log(`Cloning selected configuration ID: ${JSON.stringify(configuration)}`, LogLevel.DEBUG);
-
-    this.owner = configuration.getOwner();
-    this.key = configuration.getKey();
-    this.value = configuration.getValue();
-
+    this.configuration = configuration;
+    this.owner = configuration.owner;
+    this.key = configuration.key;
+    this.value = configuration.value;
     this.toggleDetailPanelVisibility();
   }
 }

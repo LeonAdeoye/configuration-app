@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigurationService } from "../../services/configuration.service";
+import { Configuration } from "../../models/configuration";
 
 @Component({
   selector: 'app-detail',
@@ -11,6 +12,7 @@ export class DetailComponent implements OnInit
   @Input() owner: string;
   @Input() key: string;
   @Input() value: string;
+  @Input() configuration: Configuration;
   @Output() closePanelEventEmitter = new EventEmitter();
 
   constructor(private configurationService: ConfigurationService) { }

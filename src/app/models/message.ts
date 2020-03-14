@@ -15,7 +15,7 @@ export class Message
     this.method = method;
   }
 
-  public getMessage(): string
+  public getPayload(): string
   {
     return this.message;
   }

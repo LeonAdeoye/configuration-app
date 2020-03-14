@@ -52,21 +52,51 @@ export class ConfigurationService
   public addNewConfiguration(owner: string, key: string, value: string): void
   {
     this.log(`Adding new configuration: {"owner": ${owner} "key": ${key}, "value": ${value}}`, LogLevel.DEBUG);
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": ${owner} "key": ${key}, "value": ${value}}`, MessageTransport.HTTP, MessageMethod.POST);
-    this.messageService.send(message);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": "${owner}", "key": "${key}", "value": "${value}"}`, MessageTransport.HTTP, MessageMethod.POST);
+    this.messageService.send(message).subscribe(
+      (result) =>
+    {
+      if(result)
+        this.log(`result: ${result}`, LogLevel.DEBUG);
+    },
+    (error) =>
+    {
+      if(error)
+        this.log(`${error.message}`, LogLevel.ERROR);
+    });
   }
 
   public deleteConfiguration(configurationId: string): void
   {
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"id" : ${configurationId}}`, MessageTransport.HTTP, MessageMethod.DELETE);
-    this.messageService.send(message);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"id" : "${configurationId}"}`, MessageTransport.HTTP, MessageMethod.DELETE);
+    this.messageService.send(message).subscribe(
+      (result) =>
+      {
+        if(result)
+          this.log(`result: ${result}`, LogLevel.DEBUG);
+      },
+      (error) =>
+      {
+        if(error)
+          this.log(`${error.message}`, LogLevel.ERROR);
+      });
   }
 
   public editConfiguration(owner: string, key: string, value: string): void
   {
     this.log(`Editing exist configuration: {"owner": ${owner} "key": ${key}, "value": ${value}}`, LogLevel.DEBUG);
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": ${owner} "key": ${key}, "value": ${value}}`, MessageTransport.HTTP, MessageMethod.PUT);
-    this.messageService.send(message);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": "${owner}", "key": "${key}", "value": ${value}}`, MessageTransport.HTTP, MessageMethod.PUT);
+    this.messageService.send(message).subscribe(
+      (result) =>
+      {
+        if(result)
+          this.log(`result: ${result}`, LogLevel.DEBUG);
+      },
+      (error) =>
+      {
+        if(error)
+          this.log(`${error.message}`, LogLevel.ERROR);
+      });
   }
 
   getConfigurationValue(owner: string, key: string): string

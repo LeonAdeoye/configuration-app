@@ -11,9 +11,9 @@
     <mat-label>Value</mat-label>
     <input matInput placeholder="Enter the configuration value..." [(ngModel)]="value" [ngModelOptions]="{standalone: true}">
   </mat-form-field>
-  <button class="detail-button" mat-flat-button (click)="clear()">Clear</button>
-  <button class="detail-button" mat-flat-button (click)="cancel()">Cancel</button>
-  <button class="detail-button" mat-flat-button (click)="save()">Save</button>
+  <button class="detail-button" type="button" mat-flat-button (click)="clear()">Clear</button>
+  <button class="detail-button" type="button" mat-flat-button (click)="cancel()">Cancel</button>
+  <button class="detail-button" type="button" mat-flat-button (click)="save()">Save</button>
 </form>
 
 

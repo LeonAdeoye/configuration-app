@@ -23,6 +23,7 @@ export class DetailComponent implements OnInit
 
   public clear(): void
   {
+    this.configuration = null;
     this.owner = "";
     this.key = "";
     this.value = "";

@@ -44,6 +44,7 @@ export class AppComponent
   private addConfiguration(): void
   {
     this.log(`Adding a new configuration...`, LogLevel.DEBUG);
+    this.configuration = new Configuration();
     this.owner = "";
     this.key = "";
     this.value = "";

@@ -15,11 +15,19 @@ export class Configuration
   @JsonProperty("value", String)
   private _value: string;
 
-  public constructor(owner?: string, key?:string, value?: string, id?: string)
+  @JsonProperty("lastUpdatedBy", String)
+  private _lastUpdatedBy: string;
+
+  @JsonProperty("lastUpdatedOn", String)
+  private _lastUpdatedOn: string;
+
+  public constructor(owner?: string, key?:string, value?: string, lastUpdatedBy?: string, lastUpdatedOn?: string, id?: string)
   {
     this._owner = owner || "";
     this._key = key || "";
     this._value = value || "";
+    this._lastUpdatedBy = lastUpdatedBy || "";
+    this._lastUpdatedOn = lastUpdatedOn || "";
     this._id = id || "";
   }
 
@@ -61,6 +69,26 @@ export class Configuration
   public set value(value: string)
   {
     this._value = value;
+  }
+
+  public get lastUpdatedBy(): string
+  {
+    return this._lastUpdatedBy;
+  }
+
+  public set lastUpdatedBy(value: string)
+  {
+    this._lastUpdatedBy = value;
+  }
+
+  public get lastUpdatedOn(): string
+  {
+    return this._lastUpdatedOn;
+  }
+
+  public set lastUpdatedOn(value: string)
+  {
+    this._lastUpdatedOn = value;
   }
 
   public static deserialize(jsonObject: any): Configuration

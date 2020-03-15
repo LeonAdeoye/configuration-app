@@ -14,6 +14,7 @@ export class BootstrapService
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
+
     if ((<any>window).require)
     {
       try
@@ -39,6 +40,8 @@ export class BootstrapService
       // TODO remove this as it is used only for non-electron debugging from a normal browser when the ng serve command is used.
       if(this.configurationService.getAllConfigurations().length === 0)
         this.configurationService.loadAllConfigurations();
+
+      this.configurationService.setCurrentUser("Leon Adeoye");
     }
   }
 

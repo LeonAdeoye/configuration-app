@@ -6,6 +6,7 @@ import { Message } from "../models/message";
 import { Constants } from "../models/constants";
 import { Configuration } from "../models/configuration";
 import { Subject } from "rxjs";
+import { UtilityService } from "./utility.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,20 @@ export class ConfigurationService
   public editConfigurationSubject = new Subject<Configuration>();
   public cloneConfigurationSubject = new Subject<Configuration>();
   public addConfigurationSubject = new Subject();
+  private currentUser: string;
 
   constructor(private loggingService: LoggingService, private messageService: MessageService)
   {
+  }
+
+  public setCurrentUser(value: string)
+  {
+    this.currentUser = value;
+  }
+
+  public getCurrentUser(): string
+  {
+    return this.currentUser;
   }
 
   private log(message: string, logLevel: LogLevel)
@@ -58,8 +70,12 @@ export class ConfigurationService
 
   public addNewConfiguration(owner: string, key: string, value: string): void
   {
-    this.log(`Adding new configuration: {"owner": ${owner} "key": ${key}, "value": ${value}}`, LogLevel.DEBUG);
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": "${owner}", "key": "${key}", "value": "${value}"}`, MessageTransport.HTTP, MessageMethod.POST);
+    this.log(`Adding new configuration: {"owner": ${owner} "key": ${key}, "value": ${value}, "lastUpdatedBy": ${this.getCurrentUser()}, "lastUpdatedOn": ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
+
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`,
+      `{"owner": "${owner}", "key": "${key}", "value": "${value}", "lastUpdatedBy": "${this.getCurrentUser()}", "lastUpdatedOn": "${UtilityService.getCurrentTimestamp()}"}`,
+      MessageTransport.HTTP, MessageMethod.POST);
+
     this.messageService.send(message).subscribe(
       (result) =>
     {
@@ -93,8 +109,12 @@ export class ConfigurationService
 
   public editConfiguration(owner: string, key: string, value: string): void
   {
-    this.log(`Editing exist configuration: {"owner": ${owner} "key": ${key}, "value": ${value}}`, LogLevel.DEBUG);
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"owner": "${owner}", "key": "${key}", "value": ${value}}`, MessageTransport.HTTP, MessageMethod.PUT);
+    this.log(`Editing exist configuration: {"owner": ${owner} "key": ${key}, "value": ${value}, "lastUpdatedBy": ${this.getCurrentUser()}, "lastUpdatedOn": ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
+
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`,
+      `{"owner": "${owner}", "key": "${key}", "value": ${value}, "lastUpdatedBy": "${this.getCurrentUser()}", "lastUpdatedOn": "${UtilityService.getCurrentTimestamp()}"}`,
+      MessageTransport.HTTP, MessageMethod.PUT);
+
     this.messageService.send(message).subscribe(
       (result) =>
       {

@@ -16,4 +16,9 @@ export class UtilityService
   {
     return value && value.trim() !== "";
   }
+
+  public static getCurrentTimestamp(): String
+  {
+    return new Date().getTime().toString();
+  }
 }

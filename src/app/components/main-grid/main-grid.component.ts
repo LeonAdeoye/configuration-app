@@ -27,6 +27,8 @@ export class MainGridComponent implements OnInit
       return row.id;
     };
 
+    this.configurationsGridOptions.suppressCellSelection = true;
+
     this.configurationsGridOptions.onCellContextMenu = (params) =>
     {
       this.configurationsGridOptions.api.deselectAll();
@@ -144,7 +146,17 @@ export class MainGridComponent implements OnInit
       {
         field: 'value',
         sortable: true,
-        minWidth: 450
+        minWidth: 470
+      },
+      {
+        field: 'lastUpdatedBy',
+        sortable: true,
+        minWidth: 140
+      },
+      {
+        field: 'lastUpdatedOn',
+        sortable: true,
+        minWidth: 140
       }
     ];
   }

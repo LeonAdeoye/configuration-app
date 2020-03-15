@@ -2,22 +2,22 @@ import { MessageMethod, MessageTransport } from "./types";
 
 export class Message
 {
-  private readonly message: string;
+  private readonly payload: string;
   private readonly transport: MessageTransport;
   private readonly method: MessageMethod;
   private readonly address: string;
 
-  public constructor(address: string, message?: string, transport?: MessageTransport, method?: MessageMethod)
+  public constructor(address: string, payload?: string, transport?: MessageTransport, method?: MessageMethod)
   {
     this.address = address;
-    this.message = message;
+    this.payload = payload;
     this.transport = transport;
     this.method = method;
   }
 
   public getPayload(): string
   {
-    return this.message;
+    return this.payload;
   }
 
   public getTransport(): string

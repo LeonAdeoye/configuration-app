@@ -76,7 +76,7 @@ export class ConfigurationService
 
   public deleteConfiguration(configurationId: string): void
   {
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, `{"id" : "${configurationId}"}`, MessageTransport.HTTP, MessageMethod.DELETE);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration?id=${configurationId}`, null, MessageTransport.HTTP, MessageMethod.DELETE);
     this.messageService.send(message).subscribe(
       (result) =>
       {

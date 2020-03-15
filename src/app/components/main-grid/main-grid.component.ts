@@ -27,6 +27,12 @@ export class MainGridComponent implements OnInit
       return row.id;
     };
 
+    this.configurationsGridOptions.onCellContextMenu = (params) =>
+    {
+      this.configurationsGridOptions.api.deselectAll();
+      params.node.setSelected(true);
+    };
+
     configurationService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.configurationsGridOptions.api)

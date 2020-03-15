@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigurationService } from "../../services/configuration.service";
+import { UtilityService } from "../../services/utility.service";
 import { Configuration } from "../../models/configuration";
 
 @Component({
@@ -41,4 +42,21 @@ export class DetailComponent implements OnInit
 
     this.closePanelEventEmitter.emit();
   }
+
+
+  public canClear(): boolean
+  {
+    return UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.owner)
+      || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.key)
+      || UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.value);
+  }
+
+  public canSave(): boolean
+  {
+    return UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.owner)
+      && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.key)
+      && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.value);
+  }
+
+
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GridSearchService } from "../../services/grid-search.service";
 import { ConfigurationService } from "../../services/configuration.service";
 import { IpcRenderer } from "electron";
-import { LogLevel } from "../../models/types";
+import { LogLevel, ServiceUpdate } from "../../models/types";
 import { LoggingService } from "../../services/logging.service";
 
 @Component({
@@ -57,8 +57,7 @@ export class MainHeaderComponent implements OnInit
 
   public addConfiguration(): void
   {
-    this.log("Adding new configuration...", LogLevel.INFO);
-    //this.configurationService.
+    this.configurationService.addConfigurationSubject.next();
   }
 
   private log(message: string, logLevel: LogLevel): void

@@ -16,6 +16,7 @@ export class ConfigurationService
   public serviceUpdateSubject = new Subject<ServiceUpdate>();
   public editConfigurationSubject = new Subject<Configuration>();
   public cloneConfigurationSubject = new Subject<Configuration>();
+  public addConfigurationSubject = new Subject();
 
   constructor(private loggingService: LoggingService, private messageService: MessageService)
   {
@@ -35,6 +36,7 @@ export class ConfigurationService
         {
           this.configurations = Configuration.deserializeArray(configurations);
           this.log(`Retrieved ${configurations.length} configurations from the configuration micro-service.`, LogLevel.INFO);
+          this.log(`Configurations details: ${JSON.stringify(configurations)}`, LogLevel.INFO);
           this.serviceUpdateSubject.next(ServiceUpdate.REFRESH);
         }
         catch(err)

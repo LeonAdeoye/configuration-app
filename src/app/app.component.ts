@@ -23,6 +23,7 @@ export class AppComponent
   {
     this.configurationService.editConfigurationSubject.subscribe((configuration) => this.editConfiguration(configuration));
     this.configurationService.cloneConfigurationSubject.subscribe((configuration) => this.cloneConfiguration(configuration));
+    this.configurationService.addConfigurationSubject.subscribe(() => this.addConfiguration());
 
     if ((<any>window).require)
     {
@@ -34,7 +35,6 @@ export class AppComponent
         this.ipcRenderer.on('context-menu-command', (event, arg) =>
         {
           this.log('App component received context-menu-command: ' + arg, LogLevel.DEBUG);
-
           if(arg === "Add Configuration")
             this.addConfiguration();
         })
@@ -65,7 +65,6 @@ export class AppComponent
 
   private addConfiguration(): void
   {
-    this.log(`Adding a new configuration...`, LogLevel.DEBUG);
     this.configuration = new Configuration();
     this.toggleDetailPanelVisibility();
   }

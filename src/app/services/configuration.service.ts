@@ -41,6 +41,11 @@ export class ConfigurationService
         {
           this.log(err.message, LogLevel.ERROR);
         }
+    },
+    (error) =>
+    {
+      if(error)
+        this.log(`${error.message}`, LogLevel.ERROR);
     });
   }
 

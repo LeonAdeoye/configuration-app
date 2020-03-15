@@ -9,13 +9,13 @@ import { Configuration } from "../../models/configuration";
 })
 export class DetailComponent implements OnInit
 {
-  @Input() owner: string;
-  @Input() key: string;
-  @Input() value: string;
   @Input() configuration: Configuration;
   @Output() closePanelEventEmitter = new EventEmitter();
 
-  constructor(private configurationService: ConfigurationService) { }
+  constructor(private configurationService: ConfigurationService)
+  {
+    this.clear();
+  }
 
   ngOnInit(): void
   {
@@ -23,18 +23,15 @@ export class DetailComponent implements OnInit
 
   public clear(): void
   {
-    this.configuration = null;
-    this.owner = "";
-    this.key = "";
-    this.value = "";
+    this.configuration = new Configuration();
   }
 
   public save(): void
   {
-    if(this.configurationService.getConfigurationValue(this.owner, this.key))
-      this.configurationService.editConfiguration(this.owner, this.key, this.value);
+    if(this.configurationService.getConfigurationValue(this.configuration.owner, this.configuration.key))
+      this.configurationService.editConfiguration(this.configuration.owner, this.configuration.key, this.configuration.value);
     else
-      this.configurationService.addNewConfiguration(this.owner, this.key, this.value);
+      this.configurationService.addNewConfiguration(this.configuration.owner, this.configuration.key, this.configuration.value);
 
     this.closePanelEventEmitter.emit();
   }

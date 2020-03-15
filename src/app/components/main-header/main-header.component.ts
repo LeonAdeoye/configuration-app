@@ -58,6 +58,7 @@ export class MainHeaderComponent implements OnInit
   public addConfiguration(): void
   {
     this.log("Adding new configuration...", LogLevel.INFO);
+    //this.configurationService.
   }
 
   private log(message: string, logLevel: LogLevel): void

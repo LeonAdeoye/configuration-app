@@ -17,10 +17,10 @@ export class Configuration
 
   public constructor(owner?: string, key?:string, value?: string, id?: string)
   {
-    this._owner = owner;
-    this._key = key;
-    this._value = value;
-    this._id = id;
+    this._owner = owner || "";
+    this._key = key || "";
+    this._value = value || "";
+    this._id = id || "";
   }
 
   public get id(): string

@@ -14,7 +14,7 @@ export class BootstrapService
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
-
+    loggingService.initialize("configuration-app");
     if ((<any>window).require)
     {
       try

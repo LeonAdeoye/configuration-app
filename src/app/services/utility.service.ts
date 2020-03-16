@@ -21,4 +21,9 @@ export class UtilityService
   {
     return new Date().getTime().toString();
   }
+
+  public static isNullOrUndefined(value: any): boolean
+  {
+    return value === undefined || value === null;
+  }
 }

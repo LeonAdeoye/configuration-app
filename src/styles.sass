@@ -5,12 +5,14 @@
 
 $primary-color: #404040
 $panel-color: lightgrey
+$grid-row-selection-color: #bdc3c7
 $primary-font-family: -apple-system, Arial
 $primary-font-color: white
 $toolbar-title-font-size: 24px
 $toolbar-max-height: 60px
 $toolbar-font-weight: 600
 $toolbar-title-left-margin: 16px
+
 
 \:host
   font-family: $primary-font-family
@@ -63,6 +65,16 @@ div.content
   display: flex
   flex-direction: column
   margin: $toolbar-max-height auto
+
+.ag-theme-balham
+  .ag-row-selected
+    background-color: $grid-row-selection-color
+    border-color: $grid-row-selection-color
+
+button.detail-button:hover
+  background: $primary-color
+  color: white
+
 
 
 

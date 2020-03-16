@@ -1,5 +1,5 @@
 <form class="detail-panel-form">
-  <mat-form-field appearance="outline" class="detail-panel-widget">
+  <mat-form-field appearance="outline" class="detail-panel-widget first-widget">
     <mat-label>Owner</mat-label>
     <input matInput placeholder="Enter the configuration owner..." [(ngModel)]="configuration.owner" [ngModelOptions]="{standalone: true}">
   </mat-form-field>
@@ -11,10 +11,10 @@
     <mat-label>Value</mat-label>
     <input matInput placeholder="Enter the configuration value..." [(ngModel)]="configuration.value" [ngModelOptions]="{standalone: true}">
   </mat-form-field>
-  <button class="detail-button" type="button" mat-flat-button (click)="clear()" *ngIf="canClear()">Clear</button>
-  <button class="detail-button" type="button" mat-flat-button (click)="cancel()">Cancel</button>
-  <button class="detail-button" type="button" mat-flat-button (click)="save()" *ngIf="canSave()">Save</button>
 </form>
+<button class="detail-button first-widget" type="button" mat-raised-button (click)="cancel()">Cancel</button>
+<button class="detail-button" type="button" mat-raised-button (click)="clear()" *ngIf="canClear()">Clear</button>
+<button class="detail-button" type="button" mat-raised-button (click)="save()" *ngIf="canSave()">Save</button>
 
 
 

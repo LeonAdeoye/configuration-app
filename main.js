@@ -11,7 +11,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 function createWindow()
 {
   win = new BrowserWindow({
-    width: 1100,
+    width: 1200,
     height: 800,
     backgroundColor: '#ffffff',
     frame: false,

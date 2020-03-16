@@ -6,6 +6,7 @@ import { GridOptions } from "ag-grid-community";
 import { GridSearchService } from "../../services/grid-search.service";
 import { IpcRenderer } from 'electron'
 import { Configuration } from "../../models/configuration";
+import { LocalDateTimestamp } from "../../pipes/local-date-timestamp.pipe";
 
 @Component({
   selector: 'app-main-grid',
@@ -151,12 +152,21 @@ export class MainGridComponent implements OnInit
       {
         field: 'lastUpdatedBy',
         sortable: true,
-        minWidth: 140
+        minWidth: 140,
+        maxWidth: 140
       },
       {
+        headerName: "Last Updated On",
         field: 'lastUpdatedOn',
         sortable: true,
-        minWidth: 140
+        minWidth: 150,
+        maxWidth: 150,
+        valueGetter: (params) =>
+        {
+          let localDateTimeStamp = new LocalDateTimestamp();
+          let timestamp = new Number((params.data as Configuration).lastUpdatedOn);
+          return localDateTimeStamp.transform(timestamp.valueOf());
+        }
       }
     ];
   }

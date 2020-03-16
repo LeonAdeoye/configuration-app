@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GridSearchService } from "../../services/grid-search.service";
 import { ConfigurationService } from "../../services/configuration.service";
 import { IpcRenderer } from "electron";
-import { LogLevel, ServiceUpdate } from "../../models/types";
+import { LogLevel } from "../../models/types";
 import { LoggingService } from "../../services/logging.service";
 
 @Component({

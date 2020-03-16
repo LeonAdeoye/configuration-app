@@ -3,6 +3,7 @@ import { LogLevel } from "../models/types";
 import { LoggingService } from "./logging.service";
 import { IpcRenderer } from "electron";
 import { ConfigurationService } from "./configuration.service";
+import { Constants } from "../models/constants";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,9 @@ export class BootstrapService
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
-    loggingService.initialize("configuration-app");
+    this.configurationService.setCurrentUser(Constants.DEFAULT_USER_NAME);
+    loggingService.initialize("configuration-app", this.configurationService.getCurrentUser(), Constants.MAX_LOG_SIZE, LogLevel.DEBUG);
+
     if ((<any>window).require)
     {
       try
@@ -41,7 +44,6 @@ export class BootstrapService
       if(this.configurationService.getAllConfigurations().length === 0)
         this.configurationService.loadAllConfigurations();
 
-      this.configurationService.setCurrentUser("Leon Adeoye");
     }
   }
 

@@ -14,17 +14,19 @@ export class LoggingService
   private loggerDefaultLevel: LogLevel = LogLevel.DEBUG;
   private loggerURL: string = "http://localhost:20002/logs";
   private logger: any;
-  private loggerName: string;
-  private userId: string = "leon.adeoye";
+  private loggerUserId: string = "";
 
   constructor()
   {
 
   }
 
-  public initialize(appName: string)
+  public initialize(loggerApp: string, loggerUserId: string, loggerMaxSize: number, loggerDefaultLogLevel: LogLevel)
   {
-    this.logger = log4JavaScript.getLogger(appName);
+    this.loggerMaxSize = loggerMaxSize;
+    this.loggerUserId = loggerUserId;
+    this.loggerDefaultLevel = loggerDefaultLogLevel;
+    this.logger = log4JavaScript.getLogger(loggerApp);
     let appender = new log4JavaScript.AjaxAppender(this.loggerURL);
     appender.addHeader('Content-Type', 'application/x-www-form-urlencoded');
     this.logger.addAppender(appender);
@@ -40,7 +42,7 @@ export class LoggingService
     if(!UtilityService.isNullOrUndefined(logLevel))
       currentLevel = (<any>LogLevel)[logLevel.toString().toUpperCase()];
 
-    const messageToLog = `[${currentLevel}] - [${this.userId}] - [${source}] - [${localTimestamp}] - ${this.truncate(message)}`;
+    const messageToLog = `[${currentLevel}] - [${this.loggerUserId}] - [${source}] - [${localTimestamp}] - ${this.truncate(message)}`;
 
     switch(logLevel)
     {

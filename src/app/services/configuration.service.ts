@@ -112,7 +112,7 @@ export class ConfigurationService
     this.log(`Editing exist configuration: {"owner": ${owner} "key": ${key}, "value": ${value}, "lastUpdatedBy": ${this.getCurrentUser()}, "lastUpdatedOn": ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
 
     let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`,
-      `{"owner": "${owner}", "key": "${key}", "value": ${value}, "lastUpdatedBy": "${this.getCurrentUser()}", "lastUpdatedOn": "${UtilityService.getCurrentTimestamp()}"}`,
+      `{"owner": "${owner}", "key": "${key}", "value": "${value}", "lastUpdatedBy": "${this.getCurrentUser()}", "lastUpdatedOn": "${UtilityService.getCurrentTimestamp()}"}`,
       MessageTransport.HTTP, MessageMethod.PUT);
 
     this.messageService.send(message).subscribe(

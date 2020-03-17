@@ -43,6 +43,7 @@ export class LoggingService
       currentLevel = (<any>LogLevel)[logLevel.toString().toUpperCase()];
 
     const messageToLog = `[${currentLevel}] - [${this.loggerUserId}] - [${source}] - [${localTimestamp}] - ${this.truncate(message)}`;
+    console.log(messageToLog);
 
     switch(logLevel)
     {
@@ -62,7 +63,6 @@ export class LoggingService
         this.logger.warn(messageToLog);
         break;
     }
-    console.log(messageToLog);
   }
 
   private truncate(value: string): string

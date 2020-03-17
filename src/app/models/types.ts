@@ -1,6 +1,3 @@
-import { updatePlaceholderMap } from "@angular/compiler/src/render3/view/i18n/util";
-import { ɵɵqueryRefresh } from "@angular/core";
-
 export enum LogLevel
 {
   TRACE = 1,

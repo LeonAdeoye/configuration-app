@@ -32,8 +32,11 @@ export class LoggingService
     this.logger.addAppender(appender);
   }
 
-  public log(source: string, message: string, logLevel: LogLevel): void
+  public log(source: string, message: string, logLevel: LogLevel)
   {
+    if(logLevel < this.loggerDefaultLevel)
+      return;
+
     let localDateTimeStamp = new LocalDateTimestamp();
     let timestamp = new Number((UtilityService.getCurrentTimestamp()));
     let localTimestamp = localDateTimeStamp.transform(timestamp.valueOf());

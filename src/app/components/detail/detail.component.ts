@@ -30,7 +30,7 @@ export class DetailComponent implements OnInit
   public save(): void
   {
     if(this.configurationService.getConfigurationValue(this.configuration.owner, this.configuration.key))
-      this.configurationService.editConfiguration(this.configuration.owner, this.configuration.key, this.configuration.value);
+      this.configurationService.editConfiguration(this.configuration);
     else
       this.configurationService.addNewConfiguration(this.configuration.owner, this.configuration.key, this.configuration.value);
 

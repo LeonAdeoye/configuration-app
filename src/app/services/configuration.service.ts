@@ -70,7 +70,7 @@ export class ConfigurationService
 
   public addNewConfiguration(owner: string, key: string, value: string): void
   {
-    this.log(`Adding new configuration: {"owner": ${owner} "key": ${key}, "value": ${value}, "lastUpdatedBy": ${this.getCurrentUser()}, "lastUpdatedOn": ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
+    this.log(`Adding new configuration: {owner: ${owner}, key: ${key}, value: ${value}, lastUpdatedBy: ${this.getCurrentUser()}, lastUpdatedOn: ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
 
     let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`,
       `{"owner": "${owner}", "key": "${key}", "value": "${value}", "lastUpdatedBy": "${this.getCurrentUser()}", "lastUpdatedOn": "${UtilityService.getCurrentTimestamp()}"}`,
@@ -107,13 +107,14 @@ export class ConfigurationService
       });
   }
 
-  public editConfiguration(owner: string, key: string, value: string): void
+  public editConfiguration(configuration: Configuration): void
   {
-    this.log(`Editing exist configuration: {"owner": ${owner} "key": ${key}, "value": ${value}, "lastUpdatedBy": ${this.getCurrentUser()}, "lastUpdatedOn": ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
+    this.log(`Editing exist configuration: {id: ${configuration.id}, owner: ${configuration.owner}, key: ${configuration.key}, value: ${configuration.value}, lastUpdatedBy: ${this.getCurrentUser()}, lastUpdatedOn: ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
 
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`,
-      `{"owner": "${owner}", "key": "${key}", "value": "${value}", "lastUpdatedBy": "${this.getCurrentUser()}", "lastUpdatedOn": "${UtilityService.getCurrentTimestamp()}"}`,
-      MessageTransport.HTTP, MessageMethod.PUT);
+    configuration.lastUpdatedBy = this.getCurrentUser();
+    configuration.lastUpdatedOn = UtilityService.getCurrentTimestamp();
+
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, JSON.stringify(configuration), MessageTransport.HTTP, MessageMethod.PUT);
 
     this.messageService.send(message).subscribe(
       (result) =>

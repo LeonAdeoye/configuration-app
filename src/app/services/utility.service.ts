@@ -17,7 +17,7 @@ export class UtilityService
     return value && value.trim() !== "";
   }
 
-  public static getCurrentTimestamp(): String
+  public static getCurrentTimestamp(): string
   {
     return new Date().getTime().toString();
   }

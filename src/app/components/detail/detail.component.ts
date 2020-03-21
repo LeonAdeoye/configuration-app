@@ -39,7 +39,6 @@ export class DetailComponent implements OnInit
     this.closePanelEventEmitter.emit();
   }
 
-
   public canClear(): boolean
   {
     return UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.owner)
@@ -53,6 +52,4 @@ export class DetailComponent implements OnInit
       && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.key)
       && UtilityService.isNotNullOrEmptyOrBlankOrUndefined(this.configuration.value);
   }
-
-
 }

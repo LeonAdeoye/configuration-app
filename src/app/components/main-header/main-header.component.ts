@@ -60,6 +60,12 @@ export class MainHeaderComponent implements OnInit
     this.configurationService.addConfigurationSubject.next();
   }
 
+  public toggleWindowMaximization(): void
+  {
+    this.log("Sending command request to maximize the app.", LogLevel.INFO);
+    this.ipcRenderer.send('command-signal', 'toggle-window-maximization-app-command');
+  }
+
   private log(message: string, logLevel: LogLevel): void
   {
     this.loggingService.log("MainHeaderComponent", message, logLevel);

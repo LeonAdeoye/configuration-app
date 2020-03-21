@@ -102,6 +102,9 @@ ipcMain.on('command-signal', (event, command) =>
       case "minimize-app-command":
         win.minimize();
         break;
+      case "toggle-window-maximization-app-command":
+        win.isMaximized() ? win.unmaximize() : win.maximize();
+        break;
     }
   }
 });

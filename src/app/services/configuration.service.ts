@@ -68,28 +68,6 @@ export class ConfigurationService
     return this.configurations;
   }
 
-  public addNewConfiguration(owner: string, key: string, value: string): void
-  {
-    this.log(`Adding new configuration: {owner: ${owner}, key: ${key}, value: ${value}, lastUpdatedBy: ${this.getCurrentUser()}, lastUpdatedOn: ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
-
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`,
-      `{"owner": "${owner}", "key": "${key}", "value": "${value}", "lastUpdatedBy": "${this.getCurrentUser()}", "lastUpdatedOn": "${UtilityService.getCurrentTimestamp()}"}`,
-      MessageTransport.HTTP, MessageMethod.POST);
-
-    this.messageService.send(message).subscribe(
-      (result) =>
-    {
-      if(result)
-        this.log(`result: ${result}`, LogLevel.DEBUG);
-      this.loadAllConfigurations();
-    },
-    (error) =>
-    {
-      if(error)
-        this.log(`${error.message}`, LogLevel.ERROR);
-    });
-  }
-
   public deleteConfiguration(configurationId: string): void
   {
     let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration?id=${configurationId}`, null, MessageTransport.HTTP, MessageMethod.DELETE);
@@ -107,20 +85,20 @@ export class ConfigurationService
       });
   }
 
-  public editConfiguration(configuration: Configuration): void
+  public saveConfiguration(configuration: Configuration): void
   {
-    this.log(`Editing exist configuration: {id: ${configuration.id}, owner: ${configuration.owner}, key: ${configuration.key}, value: ${configuration.value}, lastUpdatedBy: ${this.getCurrentUser()}, lastUpdatedOn: ${UtilityService.getCurrentTimestamp()}}`, LogLevel.DEBUG);
-
     configuration.lastUpdatedBy = this.getCurrentUser();
     configuration.lastUpdatedOn = UtilityService.getCurrentTimestamp();
 
-    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, JSON.stringify(configuration), MessageTransport.HTTP, MessageMethod.PUT);
+    this.log(`Saving ${configuration}`, LogLevel.DEBUG);
+    let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration`, configuration.toJSON(), MessageTransport.HTTP, UtilityService.isNullOrEmptyOrBlankOrUndefined(configuration.id) ? MessageMethod.POST : MessageMethod.PUT);
 
     this.messageService.send(message).subscribe(
       (result) =>
       {
         if(result)
           this.log(`result: ${result}`, LogLevel.DEBUG);
+
         this.loadAllConfigurations();
       },
       (error) =>

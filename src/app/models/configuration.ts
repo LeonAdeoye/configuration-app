@@ -1,4 +1,5 @@
 import { JsonConvert, JsonObject, JsonProperty, ValueCheckingMode } from "json2typescript";
+import { UtilityService } from "../services/utility.service";
 
 @JsonObject
 export class Configuration
@@ -28,7 +29,24 @@ export class Configuration
     this._value = value || "";
     this._lastUpdatedBy = lastUpdatedBy || "";
     this._lastUpdatedOn = lastUpdatedOn || "";
-    this._id = id || "";
+    this._id = id;
+  }
+
+  public toString(): string
+  {
+    return `{id: ${this.id}, owner: ${this.owner}, key: ${this.key}, value: ${this.value}, lastUpdatedBy: ${this.lastUpdatedBy}, lastUpdatedOn: ${this.lastUpdatedOn}}`
+  }
+
+  public toJSON(): any
+  {
+    return {
+      id: this.id,
+      owner: this.owner,
+      key: this.key,
+      value:this.value,
+      lastUpdatedBy: this.lastUpdatedBy,
+      lastUpdatedOn: this.lastUpdatedOn
+    }
   }
 
   public get id(): string

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfigurationService } from "../../services/configuration.service";
 import { UtilityService } from "../../services/utility.service";
 import { Configuration } from "../../models/configuration";
+import { LoggingService } from "../../services/logging.service";
+import { LogLevel } from "../../models/types";
 
 @Component({
   selector: 'app-detail',
@@ -13,9 +15,15 @@ export class DetailComponent implements OnInit
   @Input() configuration: Configuration;
   @Output() closePanelEventEmitter = new EventEmitter();
 
-  constructor(private configurationService: ConfigurationService)
+  constructor(private configurationService: ConfigurationService, private loggingService: LoggingService)
   {
+    this.log("Inside constructor");
     this.clear();
+  }
+
+  private log(message: string, logLevel?: LogLevel): void
+  {
+    this.loggingService.log("DetailComponent", message, logLevel);
   }
 
   ngOnInit(): void

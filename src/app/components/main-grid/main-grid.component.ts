@@ -94,7 +94,7 @@ export class MainGridComponent implements OnInit
       this.log("Unable to create IPC renderer in App component.", LogLevel.DEBUG);
   }
 
-  private log(message: string, logLevel: LogLevel)
+  private log(message: string, logLevel?: LogLevel): void
   {
     this.loggingService.log("MainGridComponent", message, logLevel);
   }

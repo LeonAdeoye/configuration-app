@@ -66,7 +66,7 @@ export class MainHeaderComponent implements OnInit
     this.ipcRenderer.send('command-signal', 'toggle-maximization-command');
   }
 
-  private log(message: string, logLevel: LogLevel): void
+  private log(message: string, logLevel?: LogLevel): void
   {
     this.loggingService.log("MainHeaderComponent", message, logLevel);
   }

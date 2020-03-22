@@ -47,7 +47,7 @@ export class BootstrapService
     }
   }
 
-  private log(message: string, logLevel: LogLevel)
+  private log(message: string, logLevel?: LogLevel): void
   {
     this.loggingService.log("BootstrapService", message, logLevel);
   }

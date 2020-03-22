@@ -32,8 +32,11 @@ export class LoggingService
     this.logger.addAppender(appender);
   }
 
-  public log(source: string, message: string, logLevel: LogLevel)
+  public log(source: string, message: string, logLevel?: LogLevel)
   {
+    if(!logLevel)
+      logLevel = LogLevel.DEBUG;
+
     if(logLevel < this.loggerDefaultLevel)
       return;
 

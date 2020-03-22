@@ -58,7 +58,7 @@ export class AppComponent
     this.isDetailPanelVisibleFlag = !this.isDetailPanelVisibleFlag;
   }
 
-  private log(message: string, logLevel: LogLevel): void
+  private log(message: string, logLevel?: LogLevel): void
   {
     this.loggingService.log("AppComponent", message, logLevel);
   }

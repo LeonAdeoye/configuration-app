@@ -137,23 +137,27 @@ export class MainGridComponent implements OnInit
       {
         field: 'owner',
         sortable: true,
-        minWidth: 130
+        minWidth: 100,
+        width: 130
       },
       {
         field: 'key',
         sortable: true,
-        minWidth: 220
+        minWidth: 150,
+        width: 200
       },
       {
         field: 'value',
         sortable: true,
-        minWidth: 470
+        minWidth: 200,
+        width: 470
       },
       {
         field: 'lastUpdatedBy',
         sortable: true,
-        minWidth: 140,
-        maxWidth: 140
+        minWidth: 100,
+        maxWidth: 140,
+        width: 140
       },
       {
         headerName: "Last Updated On",
@@ -161,6 +165,7 @@ export class MainGridComponent implements OnInit
         sortable: true,
         minWidth: 150,
         maxWidth: 150,
+        width: 150,
         valueGetter: (params) =>
         {
           let localDateTimeStamp = new LocalDateTimestamp();

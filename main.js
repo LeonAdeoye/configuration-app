@@ -13,6 +13,8 @@ function createWindow()
   win = new BrowserWindow({
     width: 1200,
     height: 800,
+    minWidth: 1000,
+    minHeight: 600,
     backgroundColor: '#ffffff',
     frame: false,
     webPreferences: {
@@ -102,7 +104,7 @@ ipcMain.on('command-signal', (event, command) =>
       case "minimize-app-command":
         win.minimize();
         break;
-      case "toggle-window-maximization-app-command":
+      case "toggle-maximization-command":
         win.isMaximized() ? win.unmaximize() : win.maximize();
         break;
     }

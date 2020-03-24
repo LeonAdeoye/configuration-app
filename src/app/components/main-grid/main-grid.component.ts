@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoggingService } from "../../services/logging.service";
 import { ConfigurationService } from "../../services/configuration.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
@@ -7,6 +7,7 @@ import { GridSearchService } from "../../services/grid-search.service";
 import { IpcRenderer } from 'electron'
 import { Configuration } from "../../models/configuration";
 import { LocalDateTimestamp } from "../../pipes/local-date-timestamp.pipe";
+import { MatMenuTrigger } from "@angular/material/menu";
 
 @Component({
   selector: 'app-main-grid',
@@ -17,6 +18,8 @@ export class MainGridComponent implements OnInit
 {
   public configurationsGridOptions: GridOptions;
   private ipcRenderer: IpcRenderer;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+  public contextMenuPosition = { x: '0px', y: '0px' };
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private gridSearchService: GridSearchService)
   {
@@ -32,8 +35,19 @@ export class MainGridComponent implements OnInit
 
     this.configurationsGridOptions.onCellContextMenu = (params) =>
     {
-      this.configurationsGridOptions.api.deselectAll();
-      params.node.setSelected(true);
+      if(this.trigger.menuOpen)
+        this.trigger.closeMenu();
+
+      let mouseEvent = params.event as MouseEvent;
+      if(this.trigger.menuClosed && mouseEvent && mouseEvent.clientX && mouseEvent.clientY)
+      {
+        this.contextMenuPosition.x = `${mouseEvent.clientX}px`;
+        this.contextMenuPosition.y = `${mouseEvent.clientY}px`;
+
+        this.configurationsGridOptions.api.deselectAll();
+        params.node.setSelected(true);
+        this.trigger.openMenu();
+      }
     };
 
     configurationService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
@@ -49,49 +63,6 @@ export class MainGridComponent implements OnInit
       if(this.configurationsGridOptions.api)
         this.configurationsGridOptions.api.setQuickFilter(gridSearchTextValue);
     });
-
-    if ((<any>window).require)
-    {
-      try
-      {
-        this.ipcRenderer = (<any>window).require('electron').ipcRenderer;
-        this.log("Successfully created IPC renderer in Main Grid component. Component is now ready to receive context menu commands.", LogLevel.DEBUG);
-
-        this.ipcRenderer.on('context-menu-command', (event, arg) =>
-        {
-          this.log('Main Grid component received context-menu-command: ' + arg, LogLevel.DEBUG);
-          let selectedConfiguration: Configuration;
-
-          switch(arg)
-          {
-            case "Edit Configuration":
-              selectedConfiguration = this.getSelectedConfiguration();
-              if(selectedConfiguration)
-                this.configurationService.editConfigurationSubject.next(selectedConfiguration);
-              break;
-            case "Clone Configuration":
-              selectedConfiguration = this.getSelectedConfiguration();
-              if(selectedConfiguration)
-                this.configurationService.cloneConfigurationSubject.next(selectedConfiguration);
-              break;
-            case "Delete Configuration":
-              selectedConfiguration = this.getSelectedConfiguration();
-              if(selectedConfiguration)
-                this.configurationService.deleteConfiguration(selectedConfiguration.id);
-              break;
-            case "Refresh Configurations":
-              this.configurationService.loadAllConfigurations();
-              break;
-          }
-        })
-      }
-      catch (e)
-      {
-        throw e;
-      }
-    }
-    else
-      this.log("Unable to create IPC renderer in App component.", LogLevel.DEBUG);
   }
 
   private log(message: string, logLevel?: LogLevel): void
@@ -116,7 +87,7 @@ export class MainGridComponent implements OnInit
         disabled: true,
         action: () =>
         {
-          this.editConfiguration(params);
+          this.editConfiguration();
         }
       },
       "separator",
@@ -125,7 +96,7 @@ export class MainGridComponent implements OnInit
         disabled: true,
         action: () =>
         {
-          this.deleteConfiguration(params);
+          this.deleteConfiguration();
         }
       }
     ];
@@ -226,13 +197,34 @@ export class MainGridComponent implements OnInit
   {
   }
 
-  public editConfiguration(params: any): void
+  public editConfiguration(): void
   {
-
+    let selectedConfiguration: Configuration = this.getSelectedConfiguration();
+    if(selectedConfiguration)
+      this.configurationService.editConfigurationSubject.next(selectedConfiguration);
   }
 
-  public deleteConfiguration(params: any): void
+  public deleteConfiguration(): void
   {
+    let selectedConfiguration: Configuration = this.getSelectedConfiguration();
+    if(selectedConfiguration)
+      this.configurationService.deleteConfiguration(selectedConfiguration.id);
+  }
 
+  public refreshConfiguration(): void
+  {
+    this.configurationService.loadAllConfigurations();
+  }
+
+  public cloneConfiguration(): void
+  {
+    let selectedConfiguration: Configuration = this.getSelectedConfiguration();
+    if(selectedConfiguration)
+      this.configurationService.cloneConfigurationSubject.next(selectedConfiguration);
+  }
+
+  public addConfiguration(): void
+  {
+    this.configurationService.addConfigurationSubject.next();
   }
 }

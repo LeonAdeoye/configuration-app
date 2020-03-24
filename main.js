@@ -38,37 +38,6 @@ function createWindow()
   {
     win.webContents.send('browser-ready-signal', 'sending browser-ready-signal from the backend process to browser component/service');
   });
-
-  setupContextMenu();
-}
-
-function addContextMenuItem(contextMenu, labelText)
-{
-  contextMenu.append(new MenuItem(
-  {
-    label: labelText,
-    click: () =>
-    {
-      win.webContents.send('context-menu-command',labelText);
-    }
-  }));
-  contextMenu.append(new MenuItem({ type: 'separator' }));
-}
-
-function setupContextMenu()
-{
-  const contextMenu = new Menu();
-
-  addContextMenuItem(contextMenu, "Add Configuration");
-  addContextMenuItem(contextMenu, "Edit Configuration");
-  addContextMenuItem(contextMenu, "Clone Configuration");
-  addContextMenuItem(contextMenu, "Delete Configuration");
-  addContextMenuItem(contextMenu, "Refresh Configurations");
-
-  win.webContents.on('context-menu', () =>
-  {
-    contextMenu.popup(win)
-  })
 }
 
 app.on('ready', createWindow);

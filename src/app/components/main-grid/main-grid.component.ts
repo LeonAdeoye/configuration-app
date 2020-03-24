@@ -4,7 +4,6 @@ import { ConfigurationService } from "../../services/configuration.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
 import { GridOptions } from "ag-grid-community";
 import { GridSearchService } from "../../services/grid-search.service";
-import { IpcRenderer } from 'electron'
 import { Configuration } from "../../models/configuration";
 import { LocalDateTimestamp } from "../../pipes/local-date-timestamp.pipe";
 import { MatMenuTrigger } from "@angular/material/menu";
@@ -17,7 +16,6 @@ import { MatMenuTrigger } from "@angular/material/menu";
 export class MainGridComponent implements OnInit
 {
   public configurationsGridOptions: GridOptions;
-  private ipcRenderer: IpcRenderer;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   public contextMenuPosition = { x: '0px', y: '0px' };
 

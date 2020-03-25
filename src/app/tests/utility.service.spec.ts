@@ -2,15 +2,18 @@ import { TestBed } from '@angular/core/testing';
 
 import { UtilityService } from '../services/utility.service';
 
-describe('UtilityService', () => {
-  let service: UtilityService;
+describe('UtilityService', () =>
+{
+  let utilityService: UtilityService;
 
-  beforeEach(() => {
+  beforeEach(() =>
+  {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UtilityService);
+    utilityService = TestBed.inject(UtilityService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should be created', () =>
+  {
+    expect(utilityService).toBeTruthy();
   });
 });

@@ -3,29 +3,30 @@ import { AppComponent } from '../app.component';
 import { ConfigurationService } from "../services/configuration.service";
 import { BootstrapService } from "../services/bootstrap.service";
 import { LoggingService } from "../services/logging.service";
-import { HttpClientModule } from "@angular/common/http";
+import { Subject } from "rxjs";
+import { Configuration } from "../models/configuration";
 
 describe('AppComponent', () =>
 {
   beforeEach(async(() =>
   {
-    const spyConfigurationService = jasmine.createSpyObj('ConfigurationService', ['loadAllConfigurations']);
+    const spyConfigurationService = jasmine.createSpyObj('ConfigurationService', ['loadAllConfigurations', 'editConfigurationSubject.subscribe', 'addConfigurationSubject.subscribe', 'cloneConfigurationSubject.subscribe']);
     const spyBootstrapService = jasmine.createSpyObj('BootstrapService', ['launch']);
     const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log']);
+
+    spyConfigurationService.editConfigurationSubject.subscribe.and.returnValue(new Subject<Configuration>());
+    spyConfigurationService.addConfigurationSubject.subscribe.and.returnValue(new Subject());
+    spyConfigurationService.cloneConfigurationSubject.subscribe.and.returnValue(new Subject<Configuration>());
 
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
-      imports: [
-        HttpClientModule
-      ],
       providers: [
-        { provide: ConfigurationService, useClass: spyConfigurationService },
-        { provide: BootstrapService, useClass: spyBootstrapService },
-        { provide: LoggingService, useClass: spyLoggingService }
+        { provide: ConfigurationService, useValue: spyConfigurationService },
+        { provide: BootstrapService, useValue: spyBootstrapService },
+        { provide: LoggingService, useValue: spyLoggingService }
       ]
-
     }).compileComponents();
   }));
 
@@ -41,13 +42,5 @@ describe('AppComponent', () =>
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('configuration-app');
-  });
-
-  it('should render title', () =>
-  {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('configuration-app app is running!');
   });
 });

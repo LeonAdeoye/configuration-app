@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DetailComponent } from '../components/detail/detail.component';
 import { ConfigurationService } from "../services/configuration.service";
-import { BootstrapService } from "../services/bootstrap.service";
 import { LoggingService } from "../services/logging.service";
 
 describe('DetailComponent', () =>

@@ -3,6 +3,7 @@ import { MessageService } from '../services/message.service';
 import { ConfigurationService } from "../services/configuration.service";
 import { LoggingService } from "../services/logging.service";
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { HttpClientModule } from "@angular/common/http";
 
 describe('MessageService', () =>
 {
@@ -18,7 +19,8 @@ describe('MessageService', () =>
         ],
       imports:
         [
-          HttpClientTestingModule
+          HttpClientTestingModule,
+          HttpClientModule
         ],
       providers:
         [

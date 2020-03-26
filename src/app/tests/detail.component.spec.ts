@@ -20,8 +20,8 @@ describe('DetailComponent', () =>
           DetailComponent
         ],
       providers: [
-        { provide: ConfigurationService, useClass: spyConfigurationService },
-        { provide: LoggingService, useClass: spyLoggingService }
+        { provide: ConfigurationService, useValue: spyConfigurationService },
+        { provide: LoggingService, useValue: spyLoggingService }
       ]
     })
     .compileComponents();

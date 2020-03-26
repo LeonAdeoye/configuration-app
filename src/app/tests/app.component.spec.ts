@@ -6,7 +6,7 @@ import { LoggingService } from "../services/logging.service";
 import { Subject } from "rxjs";
 import { Configuration } from "../models/configuration";
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClientModule } from '@angular/common/http';
+
 
 describe('AppComponent', () =>
 {
@@ -21,8 +21,14 @@ describe('AppComponent', () =>
     spyConfigurationService.cloneConfigurationSubject.subscribe.and.returnValue(new Subject<Configuration>());
 
     TestBed.configureTestingModule({
-      declarations: [ AppComponent ],
-      imports: [ HttpClientTestingModule, HttpClientModule ],
+      declarations:
+      [
+        AppComponent
+      ],
+      imports:
+      [
+        HttpClientTestingModule
+      ],
       providers: [
         { provide: ConfigurationService, useValue: spyConfigurationService },
         { provide: BootstrapService, useValue: spyBootstrapService },

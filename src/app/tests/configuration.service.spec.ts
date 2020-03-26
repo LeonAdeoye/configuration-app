@@ -14,10 +14,10 @@ describe('ConfigurationService', () =>
   {
     TestBed.configureTestingModule({
       providers:
-        [
-          { provide: MessageService, useValue: spyMessageService },
-          { provide: LoggingService, useValue: spyLoggingService }
-        ]
+      [
+        { provide: MessageService, useValue: spyMessageService },
+        { provide: LoggingService, useValue: spyLoggingService }
+      ]
     }).compileComponents();
 
     configurationService = TestBed.inject(ConfigurationService);

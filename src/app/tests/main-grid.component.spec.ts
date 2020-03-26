@@ -4,6 +4,7 @@ import { MainGridComponent } from '../components/main-grid/main-grid.component';
 import { GridSearchService } from "../services/grid-search.service";
 import { ConfigurationService } from "../services/configuration.service";
 import { LoggingService } from "../services/logging.service";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('MainGridComponent', () =>
 {
@@ -16,7 +17,14 @@ describe('MainGridComponent', () =>
   beforeEach(async(() =>
   {
     TestBed.configureTestingModule({
-      declarations: [ MainGridComponent ],
+      declarations:
+      [
+        MainGridComponent
+      ],
+      imports:
+      [
+        HttpClientTestingModule
+      ],
       providers:
       [
         { provide: ConfigurationService, useValue: spyConfigurationService },

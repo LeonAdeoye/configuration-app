@@ -4,6 +4,7 @@ import { MainHeaderComponent } from '../components/main-header/main-header.compo
 import { ConfigurationService } from "../services/configuration.service";
 import { LoggingService } from "../services/logging.service";
 import { GridSearchService } from "../services/grid-search.service";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('MainHeaderComponent', () =>
 {
@@ -16,7 +17,14 @@ describe('MainHeaderComponent', () =>
   beforeEach(async(() =>
   {
     TestBed.configureTestingModule({
-      declarations: [ MainHeaderComponent ],
+      declarations:
+      [
+        MainHeaderComponent
+      ],
+      imports:
+      [
+        HttpClientTestingModule
+      ],
       providers:
       [
         { provide: ConfigurationService, useValue: spyConfigurationService },

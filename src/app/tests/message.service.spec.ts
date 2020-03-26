@@ -3,7 +3,7 @@ import { MessageService } from '../services/message.service';
 import { ConfigurationService } from "../services/configuration.service";
 import { LoggingService } from "../services/logging.service";
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { HttpClientModule } from "@angular/common/http";
+
 
 describe('MessageService', () =>
 {
@@ -14,19 +14,15 @@ describe('MessageService', () =>
   beforeEach(() =>
   {
     TestBed.configureTestingModule({
-      declarations:
-        [
-        ],
       imports:
-        [
-          HttpClientTestingModule,
-          HttpClientModule
-        ],
+      [
+        HttpClientTestingModule
+      ],
       providers:
-        [
-          { provide: ConfigurationService, useValue: spyConfigurationService },
-          { provide: LoggingService, useValue: spyLoggingService }
-        ]
+      [
+        { provide: ConfigurationService, useValue: spyConfigurationService },
+        { provide: LoggingService, useValue: spyLoggingService }
+      ]
     });
     messageService = TestBed.inject(MessageService);
   });

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DetailComponent } from '../components/detail/detail.component';
 import { ConfigurationService } from "../services/configuration.service";
 import { LoggingService } from "../services/logging.service";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('DetailComponent', () =>
 {
@@ -14,10 +15,15 @@ describe('DetailComponent', () =>
   {
     TestBed.configureTestingModule({
       declarations:
-        [
-          DetailComponent
-        ],
-      providers: [
+      [
+        DetailComponent
+      ],
+      imports:
+      [
+        HttpClientTestingModule
+      ],
+      providers:
+      [
         { provide: ConfigurationService, useValue: spyConfigurationService },
         { provide: LoggingService, useValue: spyLoggingService }
       ]

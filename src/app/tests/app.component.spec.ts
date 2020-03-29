@@ -3,22 +3,16 @@ import { AppComponent } from '../app.component';
 import { ConfigurationService } from "../services/configuration.service";
 import { BootstrapService } from "../services/bootstrap.service";
 import { LoggingService } from "../services/logging.service";
-import { Subject } from "rxjs";
-import { Configuration } from "../models/configuration";
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfigurationServiceMock } from "./mock-configuration.service";
 
 
 describe('AppComponent', () =>
 {
   beforeEach(async(() =>
   {
-    const spyConfigurationService = jasmine.createSpyObj('ConfigurationService', ['loadAllConfigurations', 'editConfigurationSubject.subscribe', 'addConfigurationSubject.subscribe', 'cloneConfigurationSubject.subscribe']);
     const spyBootstrapService = jasmine.createSpyObj('BootstrapService', ['launch']);
     const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log']);
-
-    spyConfigurationService.editConfigurationSubject.subscribe.and.returnValue(new Subject<Configuration>());
-    spyConfigurationService.addConfigurationSubject.subscribe.and.returnValue(new Subject());
-    spyConfigurationService.cloneConfigurationSubject.subscribe.and.returnValue(new Subject<Configuration>());
 
     TestBed.configureTestingModule({
       declarations:
@@ -30,7 +24,7 @@ describe('AppComponent', () =>
         HttpClientTestingModule
       ],
       providers: [
-        { provide: ConfigurationService, useValue: spyConfigurationService },
+        { provide: ConfigurationService, useClass: ConfigurationServiceMock },
         { provide: BootstrapService, useValue: spyBootstrapService },
         { provide: LoggingService, useValue: spyLoggingService }
       ]

@@ -19,9 +19,9 @@ export class AppComponent
 
   public constructor(private bootStrapService: BootstrapService, private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
-    // this.configurationService.editConfigurationSubject.subscribe((configuration) => this.editConfiguration(configuration));
-    // this.configurationService.cloneConfigurationSubject.subscribe((configuration) => this.cloneConfiguration(configuration));
-    // this.configurationService.addConfigurationSubject.subscribe(() => this.addConfiguration());
+    this.configurationService.editConfigurationSubject.subscribe((configuration) => this.editConfiguration(configuration));
+    this.configurationService.cloneConfigurationSubject.subscribe((configuration) => this.cloneConfiguration(configuration));
+    this.configurationService.addConfigurationSubject.subscribe(() => this.addConfiguration());
   }
 
   public isDetailPanelVisible(): boolean

@@ -1,18 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MainGridComponent } from '../components/main-grid/main-grid.component';
 import { GridSearchService } from "../services/grid-search.service";
 import { ConfigurationService } from "../services/configuration.service";
 import { LoggingService } from "../services/logging.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ConfigurationServiceMock } from "./mock-configuration.service";
+import createSpyObj = jasmine.createSpyObj;
+import { GridSearchServiceMock } from "./mock-grid-search.service";
+import { MatMenuTrigger } from "@angular/material/menu";
 
 describe('MainGridComponent', () =>
 {
   let component: MainGridComponent;
   let fixture: ComponentFixture<MainGridComponent>;
-  const spyConfigurationService = jasmine.createSpyObj('ConfigurationService', ['loadAllConfigurations', 'getAllConfigurations','setCurrentUser', 'getCurrentUser']);
-  const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log', 'initialize']);
-  const spyGridSearchService = jasmine.createSpyObj('GridSearchService', ['setText']);
+  const spyLoggingService = createSpyObj('LoggingService', ['log', 'initialize']);
+  trigger: MatMenuTrigger;
 
   beforeEach(async(() =>
   {
@@ -27,9 +29,9 @@ describe('MainGridComponent', () =>
       ],
       providers:
       [
-        { provide: ConfigurationService, useValue: spyConfigurationService },
+        { provide: ConfigurationService, useClass: ConfigurationServiceMock },
         { provide: LoggingService, useValue: spyLoggingService },
-        { provide: GridSearchService, useValue: spyGridSearchService }
+        { provide: GridSearchService, useClass: GridSearchServiceMock }
       ]
     })
     .compileComponents();

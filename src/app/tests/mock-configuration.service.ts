@@ -1,7 +1,10 @@
 import { Configuration } from "../models/configuration";
 import { Subject } from "rxjs";
+import { ServiceUpdate } from "../models/types";
 
-export class ConfigurationServiceMock {
+export class ConfigurationServiceMock
+{
+  public serviceUpdateSubject = new Subject<ServiceUpdate>();
   public editConfigurationSubject = new Subject<Configuration>();
   public cloneConfigurationSubject = new Subject<Configuration>();
   public addConfigurationSubject = new Subject();

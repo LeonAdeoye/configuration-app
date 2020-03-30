@@ -1,8 +1,9 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, inject} from '@angular/core/testing';
 
 import { ConfigurationService } from '../services/configuration.service';
 import { LoggingService } from "../services/logging.service";
 import { MessageService } from "../services/message.service";
+import { Configuration } from "../models/configuration";
 
 describe('ConfigurationService', () =>
 {
@@ -27,4 +28,30 @@ describe('ConfigurationService', () =>
   {
     expect(configurationService).toBeTruthy();
   });
+
+  describe('setCurrentUser', () =>
+  {
+    it('should set the current user', () =>
+    {
+      // Act
+      configurationService.setCurrentUser("Horatio");
+      // Assert
+      expect(configurationService.getCurrentUser()).toBe("Horatio");
+    });
+  });
+
+  describe('saveConfiguration', () =>
+  {
+    it('should set the current user', inject([MessageService], (messageService) =>
+    {
+      // Arrange
+      let configuration = new Configuration();
+      // Act
+      configurationService.saveConfiguration(configuration);
+      // Assert
+      expect(messageService.send).toHaveBeenCalled();
+    }));
+  });
 });
+
+

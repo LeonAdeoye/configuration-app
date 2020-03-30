@@ -7,14 +7,13 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ConfigurationServiceMock } from "./mock-configuration.service";
 import createSpyObj = jasmine.createSpyObj;
 import { GridSearchServiceMock } from "./mock-grid-search.service";
-import { MatMenuTrigger } from "@angular/material/menu";
+import { MatMenuModule } from "@angular/material/menu";
 
 describe('MainGridComponent', () =>
 {
   let component: MainGridComponent;
   let fixture: ComponentFixture<MainGridComponent>;
   const spyLoggingService = createSpyObj('LoggingService', ['log', 'initialize']);
-  trigger: MatMenuTrigger;
 
   beforeEach(async(() =>
   {
@@ -25,7 +24,8 @@ describe('MainGridComponent', () =>
       ],
       imports:
       [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatMenuModule
       ],
       providers:
       [

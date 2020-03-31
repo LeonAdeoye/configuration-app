@@ -6,6 +6,8 @@ import { Configuration } from "../models/configuration";
 import { Subject } from "rxjs";
 import { MessageServiceMock } from "./mock-message.service";
 import { Message } from "../models/message";
+import { Constants } from "../models/constants";
+import { MessageMethod, MessageTransport } from "../models/types";
 
 
 describe('ConfigurationService', () =>
@@ -44,7 +46,7 @@ describe('ConfigurationService', () =>
 
   describe('saveConfiguration', () =>
   {
-    it('should set the current user', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
+    it('should call message service send', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
     {
       // Arrange
       let configuration = new Configuration();
@@ -53,6 +55,20 @@ describe('ConfigurationService', () =>
       configurationService.saveConfiguration(configuration);
       // Assert
       expect(messageService.send).toHaveBeenCalledWith(jasmine.any(Message));
+    }));
+  });
+
+  describe('deleteConfiguration', () =>
+  {
+    it('should call message service send', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
+    {
+      // Arrange
+      let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configuration?id=2012-12-23`, null, MessageTransport.HTTP, MessageMethod.DELETE);
+      spyOn(messageService, 'send').and.returnValues(new Subject());
+      // Act
+      configurationService.deleteConfiguration('2012-12-23');
+      // Assert
+      expect(messageService.send).toHaveBeenCalledWith(message);
     }));
   });
 });

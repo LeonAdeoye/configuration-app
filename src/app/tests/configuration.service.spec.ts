@@ -71,6 +71,21 @@ describe('ConfigurationService', () =>
       expect(messageService.send).toHaveBeenCalledWith(message);
     }));
   });
+
+  describe('loadAllConfigurations', () =>
+  {
+    it('should call message service send', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
+    {
+      // Arrange
+      let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configurations`, null, MessageTransport.HTTP, MessageMethod.GET);
+      spyOn(messageService, 'send').and.returnValues(new Subject());
+      // Act
+      configurationService.loadAllConfigurations();
+      // Assert
+      expect(messageService.send).toHaveBeenCalledWith(message);
+    }));
+  });
+
 });
 
 

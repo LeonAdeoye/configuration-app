@@ -14,7 +14,7 @@ export class UtilityService
 
   public static isNotNullOrEmptyOrBlankOrUndefined(value: String): boolean
   {
-    return value && value.trim() !== "";
+    return Boolean(value && value.trim() !== "");
   }
 
   public static getCurrentTimestamp(): string

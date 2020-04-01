@@ -77,8 +77,9 @@ describe('ConfigurationService', () =>
     it('should call message service send', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
     {
       // Arrange
+      let subject = new Subject();
       let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configurations`, null, MessageTransport.HTTP, MessageMethod.GET);
-      spyOn(messageService, 'send').and.returnValues(new Subject());
+      spyOn(messageService, 'send').and.returnValues(subject);
       // Act
       configurationService.loadAllConfigurations();
       // Assert

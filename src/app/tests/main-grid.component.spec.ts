@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MainGridComponent } from '../components/main-grid/main-grid.component';
 import { GridSearchService } from "../services/grid-search.service";
 import { ConfigurationService } from "../services/configuration.service";
@@ -8,6 +8,9 @@ import { ConfigurationServiceMock } from "./mock-configuration.service";
 import createSpyObj = jasmine.createSpyObj;
 import { GridSearchServiceMock } from "./mock-grid-search.service";
 import { MatMenuModule } from "@angular/material/menu";
+import { MessageService } from "../services/message.service";
+import { Subject } from "rxjs";
+
 
 describe('MainGridComponent', () =>
 {
@@ -46,5 +49,18 @@ describe('MainGridComponent', () =>
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('refreshConfiguration', () =>
+  {
+    it('should call configuration service loadAllConfigurations', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService, 'loadAllConfigurations');
+      // Act
+      component.refreshConfiguration();
+      // Assert
+      expect(configurationService.loadAllConfigurations).toHaveBeenCalled();
+    }));
   });
 });

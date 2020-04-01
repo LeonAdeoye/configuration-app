@@ -18,7 +18,7 @@ describe('UtilityService', () =>
 
   describe('isNotNullOrEmptyOrBlankOrUndefined', () =>
   {
-    it('should return true when passed an empty string', () =>
+    it('should return false when passed an empty string', () =>
     {
       // Arrange
       // Act
@@ -27,7 +27,7 @@ describe('UtilityService', () =>
       expect(result).toEqual(false);
     });
 
-    it('should return true when passed a null argument', () =>
+    it('should return false when passed a null argument', () =>
     {
       // Arrange
       // Act
@@ -36,7 +36,7 @@ describe('UtilityService', () =>
       expect(result).toEqual(false);
     });
 
-    it('should return true when passed an undefined argument', () =>
+    it('should return false when passed an undefined argument', () =>
     {
       // Arrange
       // Act
@@ -45,7 +45,7 @@ describe('UtilityService', () =>
       expect(result).toEqual(false);
     });
 
-    it('should return true when passed a blank string', () =>
+    it('should return false when passed a blank string', () =>
     {
       // Arrange
       // Act
@@ -54,7 +54,7 @@ describe('UtilityService', () =>
       expect(result).toEqual(false);
     });
 
-    it('should return false when passed a valid string', () =>
+    it('should return true when passed a valid string', () =>
     {
       // Arrange
       // Act
@@ -107,6 +107,54 @@ describe('UtilityService', () =>
       // Arrange
       // Act
       let result = UtilityService.isNullOrEmptyOrBlankOrUndefined("horatio");
+      // Assert
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('isNullOrUndefined', () =>
+  {
+    it('should return false when passed an empty string', () =>
+    {
+      // Arrange
+      // Act
+      let result = UtilityService.isNullOrUndefined("");
+      // Assert
+      expect(result).toEqual(false);
+    });
+
+    it('should return true when passed a null argument', () =>
+    {
+      // Arrange
+      // Act
+      let result = UtilityService.isNullOrUndefined(null);
+      // Assert
+      expect(result).toEqual(true);
+    });
+
+    it('should return true when passed an undefined argument', () =>
+    {
+      // Arrange
+      // Act
+      let result = UtilityService.isNullOrUndefined(undefined);
+      // Assert
+      expect(result).toEqual(true);
+    });
+
+    it('should return false when passed a blank string', () =>
+    {
+      // Arrange
+      // Act
+      let result = UtilityService.isNullOrUndefined("   ");
+      // Assert
+      expect(result).toEqual(false);
+    });
+
+    it('should return false when passed a valid string', () =>
+    {
+      // Arrange
+      // Act
+      let result = UtilityService.isNullOrUndefined("horatio");
       // Assert
       expect(result).toEqual(false);
     });

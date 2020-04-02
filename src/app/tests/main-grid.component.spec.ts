@@ -8,9 +8,7 @@ import { ConfigurationServiceMock } from "./mock-configuration.service";
 import createSpyObj = jasmine.createSpyObj;
 import { GridSearchServiceMock } from "./mock-grid-search.service";
 import { MatMenuModule } from "@angular/material/menu";
-import { MessageService } from "../services/message.service";
-import { Subject } from "rxjs";
-
+import { Configuration } from "../models/configuration";
 
 describe('MainGridComponent', () =>
 {
@@ -61,6 +59,20 @@ describe('MainGridComponent', () =>
       component.refreshConfiguration();
       // Assert
       expect(configurationService.loadAllConfigurations).toHaveBeenCalled();
+    }));
+  });
+
+  describe('deleteConfiguration', () =>
+  {
+    it('should call configuration service deleteConfiguration', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService, 'deleteConfiguration');
+      spyOn(component, "getSelectedConfiguration").and.returnValue(new Configuration("Horatio", "Age", "7", "Harper", "now", "20121223"));
+      // Act
+      component.deleteConfiguration();
+      // Assert
+      expect(configurationService.deleteConfiguration).toHaveBeenCalledWith("20121223");
     }));
   });
 });

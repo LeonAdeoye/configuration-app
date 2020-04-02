@@ -68,7 +68,7 @@ export class MainGridComponent implements OnInit
     this.loggingService.log("MainGridComponent", message, logLevel);
   }
 
-  private getSelectedConfiguration() : Configuration
+  public getSelectedConfiguration() : Configuration
   {
     if(this.configurationsGridOptions.api && this.configurationsGridOptions.api.getSelectedRows().length > 0)
       return this.configurationsGridOptions.api.getSelectedRows()[0] as Configuration;

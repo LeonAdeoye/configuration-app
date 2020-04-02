@@ -50,21 +50,21 @@ describe('MainGridComponent', () =>
   });
 
   describe('refreshConfiguration', () =>
+{
+  it('should call configuration service loadAllConfigurations', inject([ConfigurationService], (configurationService) =>
   {
-    it('should call configuration service loadAllConfigurations', inject([ConfigurationService], (configurationService) =>
-    {
-      // Arrange
-      spyOn(configurationService, 'loadAllConfigurations');
-      // Act
-      component.refreshConfiguration();
-      // Assert
-      expect(configurationService.loadAllConfigurations).toHaveBeenCalled();
-    }));
-  });
+    // Arrange
+    spyOn(configurationService, 'loadAllConfigurations');
+    // Act
+    component.refreshConfiguration();
+    // Assert
+    expect(configurationService.loadAllConfigurations).toHaveBeenCalled();
+  }));
+});
 
   describe('deleteConfiguration', () =>
   {
-    it('should call configuration service deleteConfiguration', inject([ConfigurationService], (configurationService) =>
+    it('should call configuration service deleteConfiguration if configuration selected', inject([ConfigurationService], (configurationService) =>
     {
       // Arrange
       spyOn(configurationService, 'deleteConfiguration');
@@ -73,6 +73,80 @@ describe('MainGridComponent', () =>
       component.deleteConfiguration();
       // Assert
       expect(configurationService.deleteConfiguration).toHaveBeenCalledWith("20121223");
+    }));
+
+    it('should not call configuration service deleteConfiguration if configuration is not selected', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService, 'deleteConfiguration');
+      spyOn(component, "getSelectedConfiguration").and.returnValue(null);
+      // Act
+      component.deleteConfiguration();
+      // Assert
+      expect(configurationService.deleteConfiguration).not.toHaveBeenCalled();
+    }));
+  });
+
+  describe('cloneConfiguration', () =>
+  {
+    it('should call configuration service cloneConfigurationSubject if configuration selected', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService.cloneConfigurationSubject, 'next');
+      spyOn(component, "getSelectedConfiguration").and.returnValue(new Configuration("Horatio", "Age", "7", "Harper", "now", "20121223"));
+      // Act
+      component.cloneConfiguration();
+      // Assert
+      expect(configurationService.cloneConfigurationSubject.next).toHaveBeenCalled();
+    }));
+
+    it('should not call configuration service cloneConfigurationSubject if configuration is not selected', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService.cloneConfigurationSubject, 'next');
+      spyOn(component, "getSelectedConfiguration").and.returnValue(null);
+      // Act
+      component.cloneConfiguration();
+      // Assert
+      expect(configurationService.cloneConfigurationSubject.next).not.toHaveBeenCalled();
+    }));
+  });
+
+  describe('editConfiguration', () =>
+  {
+    it('should call configuration service editConfigurationSubject if configuration selected', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService.editConfigurationSubject, 'next');
+      spyOn(component, "getSelectedConfiguration").and.returnValue(new Configuration("Horatio", "Age", "7", "Harper", "now", "20121223"));
+      // Act
+      component.editConfiguration();
+      // Assert
+      expect(configurationService.editConfigurationSubject.next).toHaveBeenCalled();
+    }));
+
+    it('should not call configuration service editConfigurationSubject if configuration is not selected', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService.editConfigurationSubject, 'next');
+      spyOn(component, "getSelectedConfiguration").and.returnValue(null);
+      // Act
+      component.editConfiguration();
+      // Assert
+      expect(configurationService.editConfigurationSubject.next).not.toHaveBeenCalled();
+    }));
+  });
+
+  describe('addConfiguration', () =>
+  {
+    it('should call configuration service addConfigurationSubject', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService.addConfigurationSubject, 'next');
+      // Act
+      component.addConfiguration();
+      // Assert
+      expect(configurationService.addConfigurationSubject.next).toHaveBeenCalled();
     }));
   });
 });

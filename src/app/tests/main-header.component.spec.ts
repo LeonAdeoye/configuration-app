@@ -60,4 +60,17 @@ describe('MainHeaderComponent', () =>
       expect(configurationService.addConfigurationSubject.next).toHaveBeenCalled();
     }));
   });
+
+  describe('refreshConfigurations', () =>
+  {
+    it('should call configuration service loadAllConfigurations', inject([ConfigurationService], (configurationService) =>
+    {
+      // Arrange
+      spyOn(configurationService, 'loadAllConfigurations');
+      // Act
+      component.refreshConfigurations();
+      // Assert
+      expect(configurationService.loadAllConfigurations).toHaveBeenCalled();
+    }));
+  });
 });

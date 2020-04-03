@@ -73,4 +73,25 @@ describe('MainHeaderComponent', () =>
       expect(configurationService.loadAllConfigurations).toHaveBeenCalled();
     }));
   });
+
+  describe('changeGridSearchTextValue', () =>
+  {
+    it('should set the search text value to an empty string when event is ESC key code', () =>
+    {
+      // Act
+      component.changeGridSearchTextValue({ keyCode: 27} );
+      // Assert
+      expect(component.gridSearchTextValue).toEqual("");
+      expect(spyGridSearchService.setText).toHaveBeenCalledWith("");
+    });
+
+    it('should set the search text value to the target value when event is non-ESC key code', () =>
+    {
+      // Act
+      component.changeGridSearchTextValue({ keyCode: 23, target: {value: "Horatio"}} );
+      // Assert
+      expect(component.gridSearchTextValue).toEqual("Horatio");
+      expect(spyGridSearchService.setText).toHaveBeenCalledWith("Horatio");
+    });
+  });
 });

@@ -18,14 +18,15 @@ export class MessageService
     this.loggingService.log("MessageService", message, logLevel);
   }
 
-  // TODO: do I need a factory class here?
   public send(message: Message) : any
   {
     switch(message.getTransport())
     {
       case MessageTransport.HTTP:
-        let messageOptions: any = {
-          headers: new HttpHeaders({
+        let messageOptions: any =
+        {
+          headers: new HttpHeaders(
+  {
             'Content-Type':  'application/json'
           })
         };

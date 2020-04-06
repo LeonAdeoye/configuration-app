@@ -1,9 +1,9 @@
-import { TestBed, inject} from '@angular/core/testing';
+import { TestBed, inject, async } from '@angular/core/testing';
 import { ConfigurationService } from '../services/configuration.service';
 import { LoggingService } from "../services/logging.service";
 import { MessageService } from "../services/message.service";
 import { Configuration } from "../models/configuration";
-import { Subject } from "rxjs";
+import { of, Subject } from "rxjs";
 import { MessageServiceMock } from "./mock-message.service";
 import { Message } from "../models/message";
 import { Constants } from "../models/constants";
@@ -14,6 +14,13 @@ describe('ConfigurationService', () =>
 {
   let configurationService: ConfigurationService;
   const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log']);
+
+  const testResponseData =
+    [
+      new Configuration("Horatio","age", "7", "papa", "now", "20121223"),
+      new Configuration("Harper","age", "3", "papa", "now", "20160615"),
+      new Configuration("Saori","age", "45", "papa", "now", "19750602")
+    ];
 
   beforeEach(() =>
   {
@@ -77,16 +84,49 @@ describe('ConfigurationService', () =>
     it('should call message service send', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
     {
       // Arrange
-      let subject = new Subject();
       let message = new Message(`${Constants.CONFIGURATION_SERVICE_URL_BASE}/configurations`, null, MessageTransport.HTTP, MessageMethod.GET);
-      spyOn(messageService, 'send').and.returnValues(subject);
+      spyOn(messageService, 'send').and.returnValues(new Subject());
       // Act
       configurationService.loadAllConfigurations();
       // Assert
       expect(messageService.send).toHaveBeenCalledWith(message);
     }));
+
+    it("should return list of configurations", async(inject([MessageService, ConfigurationService], (messageService, configurationService) =>
+    {
+      // Arrange
+      spyOn(messageService, 'send').and.returnValue(of(testResponseData));
+      // Act
+      configurationService.loadAllConfigurations();
+      // Assert
+      expect(configurationService.getAllConfigurations()).toEqual(testResponseData);
+    })));
   });
 
+  describe('getConfigurationValue', () =>
+  {
+    it('should return the correct value matching the owner and key', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
+    {
+      // Arrange
+      spyOn(messageService, 'send').and.returnValue(of(testResponseData));
+      configurationService.loadAllConfigurations();
+      // Act
+      let value = configurationService.getConfigurationValue("Horatio", "age");
+      // Assert
+      expect(value).toEqual("7");
+    }));
+
+    it('should return empty string of a matching owner and key cannot be found', inject([MessageService, ConfigurationService], (messageService, configurationService) =>
+    {
+      // Arrange
+      spyOn(messageService, 'send').and.returnValue(of(testResponseData));
+      configurationService.loadAllConfigurations();
+      // Act
+      let value = configurationService.getConfigurationValue("Horatio", "surname");
+      // Assert
+      expect(value).toEqual("");
+    }));
+  });
 });
 
 

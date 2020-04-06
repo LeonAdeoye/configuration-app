@@ -7,7 +7,7 @@ import { of, Subject } from "rxjs";
 import { MessageServiceMock } from "./mock-message.service";
 import { Message } from "../models/message";
 import { Constants } from "../models/constants";
-import { MessageMethod, MessageTransport } from "../models/types";
+import { MessageMethod, MessageTransport, ServiceUpdate } from "../models/types";
 
 
 describe('ConfigurationService', () =>
@@ -100,6 +100,17 @@ describe('ConfigurationService', () =>
       configurationService.loadAllConfigurations();
       // Assert
       expect(configurationService.getAllConfigurations()).toEqual(testResponseData);
+    })));
+
+    it("should call serviceUpdateSubject's next method", async(inject([MessageService, ConfigurationService], (messageService, configurationService) =>
+    {
+      // Arrange
+      spyOn(messageService, 'send').and.returnValue(of(testResponseData));
+      spyOn(configurationService.serviceUpdateSubject, 'next');
+      // Act
+      configurationService.loadAllConfigurations();
+      // Assert
+      expect(configurationService.serviceUpdateSubject.next).toHaveBeenCalledWith(ServiceUpdate.REFRESH);
     })));
   });
 

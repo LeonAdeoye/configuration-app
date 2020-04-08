@@ -12,7 +12,7 @@ export class LoggingService
 {
   private loggerMaxSize: number = Constants.MAX_LOG_SIZE;
   private loggerDefaultLevel: LogLevel = LogLevel.DEBUG;
-  private loggerURL: string = "http://localhost:20002/logs";
+  private loggerURL: string = "http://localhost:20002/log";
   private logger: any;
   private loggerUserId: string = "";
 
@@ -40,15 +40,7 @@ export class LoggingService
     if(logLevel < this.loggerDefaultLevel)
       return;
 
-    let localDateTimeStamp = new LocalDateTimestamp();
-    let timestamp = new Number((UtilityService.getCurrentTimestamp()));
-    let localTimestamp = localDateTimeStamp.transform(timestamp.valueOf());
-
-    let currentLevel = LogLevel.DEBUG;
-    if(!UtilityService.isNullOrUndefined(logLevel))
-      currentLevel = (<any>LogLevel)[logLevel.toString().toUpperCase()];
-
-    const messageToLog = `[${currentLevel}] - [${this.loggerUserId}] - [${source}] - [${localTimestamp}] - ${this.truncate(message)}`;
+    const messageToLog = `[${this.loggerUserId}@${source}]=>${this.truncate(message)}`;
     console.log(messageToLog);
 
     switch(logLevel)

@@ -16,7 +16,7 @@ export class BootstrapService
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
   {
     this.configurationService.setCurrentUser(Constants.DEFAULT_USER_NAME);
-    loggingService.initialize("configuration-app", this.configurationService.getCurrentUser(), Constants.MAX_LOG_SIZE, LogLevel.DEBUG);
+    loggingService.initialize(Constants.APP_NAME, this.configurationService.getCurrentUser(), Constants.MAX_LOG_SIZE, LogLevel.DEBUG);
 
     if ((<any>window).require)
     {
@@ -43,7 +43,6 @@ export class BootstrapService
       // TODO remove this as it is used only for non-electron debugging from a normal browser when the ng serve command is used.
       if(this.configurationService.getAllConfigurations().length === 0)
         this.configurationService.loadAllConfigurations();
-
     }
   }
 

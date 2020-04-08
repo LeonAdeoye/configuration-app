@@ -13,7 +13,6 @@ import { Configuration } from "./models/configuration";
 export class AppComponent
 {
   private isDetailPanelVisibleFlag: boolean = false;
-  title = 'configuration-app';
 
   configuration : Configuration;
 

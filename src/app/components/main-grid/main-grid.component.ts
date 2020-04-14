@@ -16,7 +16,7 @@ import { MatMenuTrigger } from "@angular/material/menu";
 export class MainGridComponent implements OnInit
 {
   public configurationsGridOptions: GridOptions;
-  @ViewChild('MatMenuTrigger') trigger: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   public contextMenuPosition = { x: '0px', y: '0px' };
 
   constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private gridSearchService: GridSearchService)
@@ -33,11 +33,11 @@ export class MainGridComponent implements OnInit
 
     this.configurationsGridOptions.onCellContextMenu = (params) =>
     {
-      if(this.trigger.menuOpen)
+      if(this.trigger && this.trigger.menuOpen)
         this.trigger.closeMenu();
 
       let mouseEvent = params.event as MouseEvent;
-      if(this.trigger.menuClosed && mouseEvent && mouseEvent.clientX && mouseEvent.clientY)
+      if(this.trigger && this.trigger.menuClosed && mouseEvent && mouseEvent.clientX && mouseEvent.clientY)
       {
         this.contextMenuPosition.x = `${mouseEvent.clientX}px`;
         this.contextMenuPosition.y = `${mouseEvent.clientY}px`;

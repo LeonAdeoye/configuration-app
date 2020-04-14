@@ -4,6 +4,8 @@ import { LoggingService } from "./services/logging.service";
 import { LogLevel } from "./models/types";
 import { ConfigurationService } from "./services/configuration.service";
 import { Configuration } from "./models/configuration";
+import { Constants } from "./models/constants";
+
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,7 @@ import { Configuration } from "./models/configuration";
 export class AppComponent
 {
   private isDetailPanelVisibleFlag: boolean = false;
+  public appName: string = Constants.APP_NAME;
 
   configuration : Configuration;
 

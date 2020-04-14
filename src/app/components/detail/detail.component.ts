@@ -17,7 +17,6 @@ export class DetailComponent implements OnInit
 
   constructor(private configurationService: ConfigurationService, private loggingService: LoggingService)
   {
-    this.log("Inside constructor");
     this.clear();
   }
 

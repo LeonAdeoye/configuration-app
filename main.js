@@ -26,7 +26,7 @@ function createWindow()
   win.loadURL(`file://${__dirname}/dist/configuration-app/index.html`);
 
   // Uncomment to debug.
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   win.on('closed', () =>
   {

@@ -108,7 +108,7 @@ export class ConfigurationService
       });
   }
 
-  getConfigurationValue(owner: string, key: string): string
+  getConfigurationValue(owner: string, key: string, fallbackValue?: string): string
   {
     for(let index = 0; index < this.configurations.length; ++index)
     {
@@ -116,6 +116,9 @@ export class ConfigurationService
         return this.configurations[index].value;
     }
 
-    return "";
+    if(fallbackValue)
+      return fallbackValue;
+    else
+      return "";
   }
 }

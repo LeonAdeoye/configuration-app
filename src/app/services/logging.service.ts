@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { LogLevel } from "../models/types";
 import { Constants } from "../models/constants";
 import * as log4JavaScript from 'log4javascript';
-import { UtilityService } from "./utility.service";
-import { LocalDateTimestamp } from "../pipes/local-date-timestamp.pipe";
 
 @Injectable({
   providedIn: 'root'

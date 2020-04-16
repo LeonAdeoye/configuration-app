@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoggingService } from "../../services/logging.service";
 import { ConfigurationService } from "../../services/configuration.service";
 import { LogLevel, ServiceUpdate } from "../../models/types";
@@ -13,7 +13,7 @@ import { MatMenuTrigger } from "@angular/material/menu";
   templateUrl: './main-grid.component.html',
   styleUrls: ['./main-grid.component.sass']
 })
-export class MainGridComponent implements OnInit
+export class MainGridComponent implements OnInit, OnDestroy
 {
   public configurationsGridOptions: GridOptions;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
@@ -48,7 +48,7 @@ export class MainGridComponent implements OnInit
       }
     };
 
-    configurationService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
+    this.configurationService.serviceUpdateSubject.subscribe((serviceUpdate: ServiceUpdate) =>
     {
       if(serviceUpdate  === ServiceUpdate.REFRESH && this.configurationsGridOptions.api)
       {
@@ -193,6 +193,13 @@ export class MainGridComponent implements OnInit
 
   ngOnInit(): void
   {
+  }
+
+  ngOnDestroy(): void
+  {
+    this.log("Closing two subscriptions in onDestroy.", LogLevel.DEBUG);
+    this.configurationService.serviceUpdateSubject.unsubscribe();
+    this.gridSearchService.gridSearchTextSubject.unsubscribe();
   }
 
   public editConfiguration(): void

@@ -4,6 +4,7 @@ import { UtilityService } from "../../services/utility.service";
 import { Configuration } from "../../models/configuration";
 import { LoggingService } from "../../services/logging.service";
 import { LogLevel } from "../../models/types";
+import { UsageService } from "../../services/usage.service";
 
 @Component({
   selector: 'app-detail',
@@ -15,7 +16,7 @@ export class DetailComponent implements OnInit
   @Input() configuration: Configuration;
   @Output() closePanelEventEmitter = new EventEmitter();
 
-  constructor(private configurationService: ConfigurationService, private loggingService: LoggingService)
+  constructor(private configurationService: ConfigurationService, private loggingService: LoggingService, private usageService: UsageService)
   {
     this.clear();
   }
@@ -37,6 +38,7 @@ export class DetailComponent implements OnInit
   public save(): void
   {
     this.configurationService.saveConfiguration(this.configuration);
+    this.usageService.usage("saved configuration");
     this.closePanelEventEmitter.emit();
   }
 

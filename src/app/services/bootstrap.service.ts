@@ -4,6 +4,7 @@ import { LoggingService } from "./logging.service";
 import { IpcRenderer } from "electron";
 import { ConfigurationService } from "./configuration.service";
 import { Constants } from "../models/constants";
+import { UsageService } from "./usage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,11 @@ export class BootstrapService
 {
   private ipcRenderer: IpcRenderer;
 
-  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService)
+  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private usageService:UsageService)
   {
     this.configurationService.setCurrentUser(Constants.DEFAULT_USER_NAME);
     loggingService.initialize(Constants.APP_NAME, this.configurationService.getCurrentUser(), Constants.MAX_LOG_SIZE, LogLevel.DEBUG);
+    this.usageService.usage("launched configuration app");
 
     if ((<any>window).require)
     {

@@ -7,6 +7,7 @@ import { GridSearchService } from "../../services/grid-search.service";
 import { Configuration } from "../../models/configuration";
 import { LocalDateTimestamp } from "../../pipes/local-date-timestamp.pipe";
 import { MatMenuTrigger } from "@angular/material/menu";
+import { UsageService } from "../../services/usage.service";
 
 @Component({
   selector: 'app-main-grid',
@@ -19,7 +20,8 @@ export class MainGridComponent implements OnInit, OnDestroy
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   public contextMenuPosition = { x: '0px', y: '0px' };
 
-  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private gridSearchService: GridSearchService)
+  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService,
+              private gridSearchService: GridSearchService, private usageService: UsageService)
   {
     this.configurationsGridOptions = <GridOptions> {};
     this.configurationsGridOptions.columnDefs = this.getColumnsDefinitions();
@@ -214,6 +216,7 @@ export class MainGridComponent implements OnInit, OnDestroy
     let selectedConfiguration: Configuration = this.getSelectedConfiguration();
     if(selectedConfiguration)
       this.configurationService.deleteConfiguration(selectedConfiguration.id);
+    this.usageService.usage("deleted configuration");
   }
 
   public refreshConfiguration(): void

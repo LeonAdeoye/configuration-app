@@ -219,7 +219,7 @@ export class MainGridComponent implements OnInit, OnDestroy
     let selectedConfiguration: Configuration = this.getSelectedConfiguration();
     if(selectedConfiguration)
       this.configurationService.deleteConfiguration(selectedConfiguration.id);
-    this.usageService.usage("deleted configuration");
+    this.usageService.saveUsage("deleted configuration");
   }
 
   public refreshConfiguration(): void

@@ -7,12 +7,14 @@ import { Message } from "../models/message";
 import { Constants } from "../models/constants";
 import { MessageMethod, MessageTransport } from "../models/types";
 import { Subject } from "rxjs";
+import { UsageService } from "../services/usage.service";
 
 describe('BootstrapService', () =>
 {
   let bootstrapService: BootstrapService;
   const spyConfigurationService = jasmine.createSpyObj('ConfigurationService', ['loadAllConfigurations', 'getAllConfigurations','setCurrentUser', 'getCurrentUser']);
   const spyLoggingService = jasmine.createSpyObj('LoggingService', ['log', 'initialize']);
+  const spyUsageService = jasmine.createSpyObj('UsageService', ['saveUsage']);
   spyConfigurationService.getAllConfigurations.and.returnValue([]);
 
   beforeEach(() =>
@@ -21,7 +23,8 @@ describe('BootstrapService', () =>
       providers:
       [
         { provide: ConfigurationService, useValue: spyConfigurationService },
-        { provide: LoggingService, useValue: spyLoggingService }
+        { provide: LoggingService, useValue: spyLoggingService },
+        { provide: UsageService, useValue: spyUsageService }
       ]
     }).compileComponents();
 
@@ -36,10 +39,10 @@ describe('BootstrapService', () =>
 
   describe('constructor', () =>
   {
-    it('should call configuration service loadAllConfigurations method', inject([LoggingService, ConfigurationService], (loggingService, configurationService) =>
+    it('should call configuration service loadAllConfigurations method', inject([LoggingService, ConfigurationService, UsageService], (loggingService, configurationService, usageService) =>
     {
       // Act
-      new BootstrapService(loggingService, configurationService);
+      const bs = new BootstrapService(loggingService, configurationService, usageService);
       // Assert
       expect(configurationService.loadAllConfigurations).toHaveBeenCalled();
     }));

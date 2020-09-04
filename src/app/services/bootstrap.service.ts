@@ -14,7 +14,7 @@ export class BootstrapService
 {
   private ipcRenderer: IpcRenderer;
 
-  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private usageService:UsageService)
+  constructor(private loggingService: LoggingService, private configurationService: ConfigurationService, private usageService: UsageService)
   {
     this.configurationService.setCurrentUser(Constants.DEFAULT_USER_NAME);
     loggingService.initialize(Constants.APP_NAME, this.configurationService.getCurrentUser(), Constants.MAX_LOG_SIZE, LogLevel.DEBUG);

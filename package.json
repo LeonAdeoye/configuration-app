@@ -28,7 +28,7 @@
     "ag-grid-community": "^22.1.1",
     "electron": "^8.0.1",
     "json2typescript": "^1.2.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "log4javascript": "^1.4.15",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
